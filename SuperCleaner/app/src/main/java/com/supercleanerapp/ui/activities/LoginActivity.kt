@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
+        //navigating from login to regiser when button is clicked
         binding.tvRegister.setOnClickListener {
 
             // Launch the register screen when the user clicks on the text.
