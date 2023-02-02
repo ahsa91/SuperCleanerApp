@@ -3,12 +3,14 @@ package com.supercleanerapp.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
 import android.view.WindowManager
 import com.supercleanerapp.R
 import com.supercleanerapp.databinding.ActivityLoginBinding
 
 @Suppress("DEPRECATION")
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity(), View.OnClickListener {
 
     /**
      * This function is auto created by Android when the Activity Class is created.
@@ -27,13 +29,55 @@ class LoginActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        //navigating from login to regiser when button is clicked
-        binding.tvRegister.setOnClickListener {
+        // Click event assigned to Forgot Password text.
+        binding.tvForgotPassword.setOnClickListener(this)
+        // Click event assigned to Login button.
+        binding.btnLogin.setOnClickListener(this)
+        // Click event assigned to Register text.
+        binding.tvRegister.setOnClickListener(this)
 
-            // Launch the register screen when the user clicks on the text.
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-            startActivity(intent)
+    }
+
+    override fun onClick(v: View?) {
+        if (v != null) {
+            when (v.id) {
+
+                R.id.tv_forgot_password -> {
+                }
+
+                R.id.btn_login -> {
+
+
+                    validateLoginDetails()
+
+                }
+
+                R.id.tv_register -> {
+                    // Launch the register screen when the user clicks on the text.
+                    val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                    startActivity(intent)
+                }
+            }
         }
+    }
 
+    /**
+     * A function to validate the login entries of a user.
+     */
+    private fun validateLoginDetails(): Boolean {
+        return when {
+            TextUtils.isEmpty(binding.etEmail.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
+                false
+            }
+            TextUtils.isEmpty(binding.etPassword.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_password), true)
+                false
+            }
+            else -> {
+                showErrorSnackBar("Your details are valid.", false)
+                true
+            }
+        }
     }
 }

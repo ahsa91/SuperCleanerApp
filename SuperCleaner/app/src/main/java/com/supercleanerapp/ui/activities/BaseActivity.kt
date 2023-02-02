@@ -61,7 +61,15 @@ open class BaseActivity : AppCompatActivity() {
         /*Set the screen content from a layout resource.
         The resource will be inflated, adding all top-level views to the screen.*/
         mProgressDialog.setContentView(R.layout.dialog_progress)
+//        mProgressDialog.findViewById is a method that returns the view with the specified ID from the layout inflated in the Dialog.
 
+//        The method is called with the argument R.id.tv_progress_text, which is the ID of the TextView we want to access.
+//
+//        The view returned by findViewById is cast to a TextView using the <TextView> syntax.
+//
+//        Finally, the text property of the TextView is set to the argument "text" passed to the showProgressDialog function.
+//
+//        So this line of code sets the text of the TextView inside the Dialog to the value of the "text" argument.
         mProgressDialog.findViewById<TextView>(R.id.tv_progress_text).text = text
 
         mProgressDialog.setCancelable(false)
