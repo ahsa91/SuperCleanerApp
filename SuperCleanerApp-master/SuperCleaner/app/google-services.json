@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "760198770156",
+    "project_id": "mysupercleanerapp",
+    "storage_bucket": "mysupercleanerapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760198770156:android:4c30043a8b8550d91aa4c9",
+        "android_client_info": {
+          "package_name": "my.supercleanerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760198770156-teaa5ht7lq0qhsnh0p56daongh76hf9t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "my.supercleanerapp",
+            "certificate_hash": "1ac0134a35524527d37928625e1e29a1204a1186"
+          }
+        },
+        {
+          "client_id": "760198770156-pgoqoaga3b9rm848hoh61bmkjfl9hb9b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5H2A3Lpg3CRpw4Owm0cSMf_QW1TpGEwg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760198770156-pgoqoaga3b9rm848hoh61bmkjfl9hb9b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
