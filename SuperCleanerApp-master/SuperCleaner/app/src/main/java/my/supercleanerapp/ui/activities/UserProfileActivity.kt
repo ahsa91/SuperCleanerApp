@@ -28,6 +28,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding:ActivityUserProfileBinding
     private lateinit var mUserDetails: User
+    private var mSelectedImageFileUri: Uri? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,46 +91,20 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
                 }
-                R.id.btn_submit ->{
-
-                    if (validateUserProfileDetails()) {
+                R.id.btn_submit -> {
 
 
-                        val userHashMap = HashMap<String, Any>()
 
-                        // Here the field which are not editable needs no update. So, we will update user Mobile Number and Gender for now.
+                    // Show the progress dialog.
+                    showProgressDialog(resources.getString(R.string.please_wait))
 
-                        // Here we get the text from editText and trim the space
-                        val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
-
-                        val gender = if (binding.rbMale.isChecked) {
-                            Constants.MALE
-                        } else {
-                            Constants.FEMALE
-                        }
-
-                        if (mobileNumber.isNotEmpty()) {
-                            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
-                        }
-
-                        userHashMap[Constants.GENDER] = gender
-                        // END
+                    FirestoreClass().uploadImageToCloudStorage(
+                        this@UserProfileActivity,
+                        mSelectedImageFileUri
+                    )
 
 
-                        // TODO Step 6: Remove the message and call the function to update user details.
-                        // START
-                        /*showErrorSnackBar("Your details are valid. You can update them.", false)*/
 
-                        // Show the progress dialog.
-                        showProgressDialog(resources.getString(R.string.please_wait))
-
-                        // call the registerUser function of FireStore class to make an entry in the database.
-                        FirestoreClass().updateUserProfileData(
-                            this@UserProfileActivity,
-                            userHashMap
-                        )
-                        // END
-                    }
                 }
             }
         }
@@ -184,10 +160,10 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 if (data != null) {
                     try {
                         // The uri of selected image from phone storage.
-                        val selectedImageFileUri = data.data!!
+                        mSelectedImageFileUri = data.data!!
 
                         GlideLoader(this@UserProfileActivity).loadUserPicture(
-                            selectedImageFileUri,
+                            mSelectedImageFileUri!!,
                             binding.ivUserPhoto
                         )
                     } catch (e: IOException) {
@@ -246,5 +222,22 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         // Redirect to the Main Screen after profile completion.
         startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
         finish()
+    }
+
+    /**
+     * A function to notify the success result of image upload to the Cloud Storage.
+     *
+     * @param imageURL After successful upload the Firebase Cloud returns the URL.
+     */
+    fun imageUploadSuccess(imageURL: String) {
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@UserProfileActivity,
+            "Your image is uploaded successfully. Image URL is $imageURL",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

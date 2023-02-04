@@ -2,7 +2,9 @@ package my.supercleanerapp.utils
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.provider.MediaStore
+import android.webkit.MimeTypeMap
 
 /**
  * A custom object to declare all the constant values in a single file. The constant values declared here is can be used in whole application.
@@ -26,6 +28,8 @@ object Constants {
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
 
+    const val USER_PROFILE_IMAGE:String = "User_Profile_Image"
+
 
 
 
@@ -48,5 +52,25 @@ object Constants {
         )
         // Launches the image selection of phone storage using the constant code.
         activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
+    }
+
+    /**
+     * A function to get the image file extension of the selected image.
+     *
+     * @param activity Activity reference.
+     * @param uri Image file uri.
+     */
+    fun getFileExtension(activity: Activity, uri: Uri?): String? {
+        /*
+         * MimeTypeMap: Two-way map that maps MIME-types to file extensions and vice versa.
+         *
+         * getSingleton(): Get the singleton instance of MimeTypeMap.
+         *
+         * getExtensionFromMimeType: Return the registered extension for the given MIME type.
+         *
+         * contentResolver.getType: Return the MIME type of the given content URL.
+         */
+        return MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
     }
 }
