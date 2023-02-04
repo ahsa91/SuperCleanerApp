@@ -12,6 +12,7 @@ import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityLoginBinding
 import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.User
+import my.supercleanerapp.utils.Constants
 
 @Suppress("DEPRECATION")
 class LoginActivity : BaseActivity(), View.OnClickListener {
@@ -138,6 +139,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         if (user.profileCompleted == 0) {
             // If the user profile is incomplete then launch the UserProfileActivity.
             val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
             startActivity(intent)
         } else {
             // Redirect the user to Main Screen after log in.
