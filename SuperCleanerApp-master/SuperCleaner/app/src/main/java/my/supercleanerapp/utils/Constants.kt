@@ -17,6 +17,14 @@ object Constants {
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
     const val READ_STORAGE_PERMISSION_CODE = 2
     const val PICK_IMAGE_REQUEST_CODE = 2
+    // Constant variables for Gender
+
+    const val MALE: String = "Male"
+    const val FEMALE: String = "Female"
+
+    // Firebase database field names
+    const val MOBILE: String = "mobile"
+    const val GENDER: String = "gender"
 
 
 
