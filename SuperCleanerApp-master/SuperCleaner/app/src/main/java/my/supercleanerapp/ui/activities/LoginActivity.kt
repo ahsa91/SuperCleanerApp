@@ -4,10 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import com.google.firebase.auth.FirebaseAuth
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityLoginBinding
+import my.supercleanerapp.firestore.FirestoreClass
+import my.supercleanerapp.models.User
 
 @Suppress("DEPRECATION")
 class LoginActivity : BaseActivity(), View.OnClickListener {
@@ -23,7 +27,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         binding=ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // This is used to hide the status bar and make the login screen as a full screen activity.
+        // It is deprecated in the API level 30. I will update you with the alternate solution soon.
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -35,24 +39,25 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         binding.btnLogin.setOnClickListener(this)
         // Click event assigned to Register text.
         binding.tvRegister.setOnClickListener(this)
-
     }
 
+    /**
+     * In Login screen the clickable components are Login Button, ForgotPassword text and Register Text.
+     */
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
 
                 R.id.tv_forgot_password -> {
 
+                    // Launch the forgot password screen when the user clicks on the forgot password text.
                     val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.btn_login -> {
 
-
-                    validateLoginDetails()
-
+                    logInRegisteredUser()
                 }
 
                 R.id.tv_register -> {
@@ -78,9 +83,60 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 false
             }
             else -> {
-                showErrorSnackBar("Your details are valid.", false)
                 true
             }
         }
+    }
+
+    /**
+     * A function to Log-In. The user will be able to log in using the registered email and password with Firebase Authentication.
+     */
+    private fun logInRegisteredUser() {
+
+        if (validateLoginDetails()) {
+
+            // Show the progress dialog.
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            // Get the text from editText and trim the space
+            val email = binding.etEmail.text.toString().trim { it <= ' ' }
+            val password = binding.etPassword.text.toString().trim { it <= ' ' }
+
+            // Log-In using FirebaseAuth
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+
+                    if (task.isSuccessful) {
+
+
+
+                        FirestoreClass().getUserDetails(this@LoginActivity)
+                        // END
+                    } else {
+                        // Hide the progress dialog
+                        hideProgressDialog()
+                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                    }
+                }
+        }
+    }
+
+
+    /**
+     * A function to notify user that logged in success and get the user details from the FireStore database after authentication.
+     */
+    fun userLoggedInSuccess(user: User) {
+
+        // Hide the progress dialog.
+        hideProgressDialog()
+
+        // Print the user details in the log as of now.
+        Log.i("First Name: ", user.firstName)
+        Log.i("Last Name: ", user.lastName)
+        Log.i("Email: ", user.email)
+
+        // Redirect the user to Main Screen after log in.
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 }

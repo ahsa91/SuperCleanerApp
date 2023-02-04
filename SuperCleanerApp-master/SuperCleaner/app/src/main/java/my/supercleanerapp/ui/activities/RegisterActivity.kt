@@ -1,7 +1,6 @@
 package my.supercleanerapp.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
@@ -127,11 +126,7 @@ class RegisterActivity : BaseActivity() {
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
 
-                        // TODO Step 9: Remove the hide progress dialog.
-                        // START
-                        /*// Hide the progress dialog
-                        hideProgressDialog()*/
-                        // END
+
 
                         // If the registration is successfully done
                         if (task.isSuccessful) {
@@ -139,7 +134,6 @@ class RegisterActivity : BaseActivity() {
                             // Firebase registered user
                             val firebaseUser: FirebaseUser = task.result!!.user!!
 
-                            // TODO Step 2: Create an instance of the user data model class. And, pass the values in the constructor.
                             // Here we have passed only four values in the constructor as there are only four values at registration. So, instead of giving it blank or default.
                             // We have already added the default values in the data model class itself. Make sure the passing value order is correct.
                             // START
@@ -150,39 +144,19 @@ class RegisterActivity : BaseActivity() {
                                 binding.etLastName.text.toString().trim { it <= ' ' },
                                 binding.etEmail.text.toString().trim { it <= ' ' }
                             )
-                            // END
-
-                            // TODO Step 4: Move the success message and the Sign out piece of code to the success function.
-                            // START
-                            /*Toast.makeText(
-                                this@RegisterActivity,
-                                resources.getString(R.string.register_success),
-                                Toast.LENGTH_SHORT
-                            ).show()
 
 
-                            *//**
-                             * Here the new user registered is automatically signed-in so we just sign-out the user from firebase
-                             * and send him to Intro Screen for Sign-In
-                             *//*
-                            FirebaseAuth.getInstance().signOut()
-                            // Finish the Register Screen
-                            finish()*/
-                            // END
 
-                            // TODO Step 8: Call the function of FirestoreClass to make an entry in the Cloud Firestore of registered user.
-                            // START
+
                             // Pass the required values in the constructor.
                             FirestoreClass().registerUser(this@RegisterActivity, user)
                             // END
 
                         } else {
 
-                            // TODO Step 10: Hide the progress dialog when the task is unsuccessful.
-                            // START
+
                             // Hide the progress dialog
                             hideProgressDialog()
-                            // END
 
                             // If the registering is not successful then show error message.
                             showErrorSnackBar(task.exception!!.message.toString(), true)
@@ -191,8 +165,6 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-    // TODO Step 3: Create a function to notify the success result of Firestore entry.
-    // START
     /**
      * A function to notify the success result of Firestore entry when the user is registered successfully.
      */
@@ -201,7 +173,7 @@ class RegisterActivity : BaseActivity() {
         // Hide the progress dialog
         hideProgressDialog()
 
-        // TODO Step 5: Replace the success message to the Toast instead of Snackbar.
+
         Toast.makeText(
             this@RegisterActivity,
             resources.getString(R.string.register_success),
