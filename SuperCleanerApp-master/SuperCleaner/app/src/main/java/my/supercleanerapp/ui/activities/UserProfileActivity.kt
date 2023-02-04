@@ -1,9 +1,13 @@
 package my.supercleanerapp.ui.activities
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -12,6 +16,8 @@ import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityUserProfileBinding
 import my.supercleanerapp.models.User
 import my.supercleanerapp.utils.Constants
+import my.supercleanerapp.utils.GlideLoader
+import java.io.IOException
 
 @Suppress("DEPRECATION")
 
@@ -62,7 +68,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         == PackageManager.PERMISSION_GRANTED
                     ) {
 
-                        showErrorSnackBar("You already have the storage permission.", false)
+                        Constants.showImageChooser(this@UserProfileActivity)
                     } else {
 
                         /*Requests permissions to be granted to this application. These permissions
@@ -97,7 +103,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             //If permission is granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                showErrorSnackBar("The storage permission is granted.", false)
+                Constants.showImageChooser(this@UserProfileActivity)
             } else {
                 //Displaying another toast if permission is not granted
                 Toast.makeText(
@@ -106,6 +112,50 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                     Toast.LENGTH_LONG
                 ).show()
             }
+        }
+    }
+
+    /**
+     * Receive the result from a previous call to
+     * {@link #startActivityForResult(Intent, int)}.  This follows the
+     * related Activity API as described there in
+     * {@link Activity#onActivityResult(int, int, Intent)}.
+     *
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode The integer result code returned by the child activity
+     *                   through its setResult().
+     * @param data An Intent, which can return result data to the caller
+     *               (various data can be attached to Intent "extras").
+     */
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE) {
+                if (data != null) {
+                    try {
+                        // The uri of selected image from phone storage.
+                        val selectedImageFileUri = data.data!!
+
+                        GlideLoader(this@UserProfileActivity).loadUserPicture(
+                            selectedImageFileUri,
+                            binding.ivUserPhoto
+                        )
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        Toast.makeText(
+                            this@UserProfileActivity,
+                            resources.getString(R.string.image_selection_failed),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            // A log is printed when user close or cancel the image selection.
+            Log.e("Request Cancelled", "Image selection cancelled")
         }
     }
 }
