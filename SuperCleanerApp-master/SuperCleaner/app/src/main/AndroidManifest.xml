@@ -10,23 +10,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-        <activity android:name="my.supercleanerapp.ui.activities.ForgotPasswordActivity"
-            android:screenOrientation="portrait"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="my.supercleanerapp.ui.activities.RegisterActivity"
-            android:exported="false"
+            android:name=".ui.activities.UserProfileActivity"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="my.supercleanerapp.ui.activities.SplashActivity"
-            android:exported="true"
+            android:name=".ui.activities.ForgotPasswordActivity"
+            android:label=""
             android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"  />
+        <activity
+            android:name=".ui.activities.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,18 +46,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="my.supercleanerapp.ui.activities.LoginActivity"
-            android:exported="true"
+            android:name=".ui.activities.LoginActivity"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="my.supercleanerapp.ui.activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
