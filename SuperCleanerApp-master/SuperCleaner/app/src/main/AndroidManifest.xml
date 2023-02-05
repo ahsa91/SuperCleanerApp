@@ -13,8 +13,16 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activites.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.activites.DashboardActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/app_name">
             <meta-data
                 android:name="android.app.lib_name"
@@ -63,7 +71,7 @@
         <activity
             android:name=".ui.activites.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
