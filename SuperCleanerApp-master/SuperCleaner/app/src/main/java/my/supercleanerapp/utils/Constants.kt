@@ -31,6 +31,8 @@ object Constants {
 
     const val USER_PROFILE_IMAGE:String = "User_Profile_Image"
     const val COMPLETE_PROFILE: String = "profileCompleted"
+    const val FIRST_NAME: String = "firstName"
+    const val LAST_NAME: String = "lastName"
 
 
 

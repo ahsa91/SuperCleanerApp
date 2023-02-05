@@ -38,29 +38,59 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         binding=ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Create a instance of the User model class.
-
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             // Get the user details from intent as a ParcelableExtra.
             mUserDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
         }
 
-        // Here, the some of the edittext components are disabled because it is added at a time of Registration.
-        binding.etFirstName.isEnabled = false
-        binding.etFirstName.setText(mUserDetails.firstName)
 
-        binding.etLastName.isEnabled = false
-        binding.etLastName.setText(mUserDetails.lastName)
+        // If the profile is incomplete then user is from login screen and wants to complete the profile.
+        if (mUserDetails.profileCompleted == 0) {
+            // Update the title of the screen to complete profile.
+            binding.tvTitle.text = resources.getString(R.string.title_complete_profile)
 
-        binding.etEmail.isEnabled = false
-        binding.etEmail.setText(mUserDetails.email)
+            // Here, the some of the edittext components are disabled because it is added at a time of Registration.
+            binding.etFirstName.isEnabled = false
+            binding.etFirstName.setText(mUserDetails.firstName)
 
-        //profile photo onclick listner
+            binding.etLastName.isEnabled = false
+            binding.etLastName.setText(mUserDetails.lastName)
+
+            binding.etEmail.isEnabled = false
+            binding.etEmail.setText(mUserDetails.email)
+        } else {
+
+            // Call the setup action bar function.
+            setupActionBar()
+
+            // Update the title of the screen to edit profile.
+            binding.tvTitle.text = resources.getString(R.string.title_edit_profile)
+
+            // Load the image using the GlideLoader class with the use of Glide Library.
+            GlideLoader(this@UserProfileActivity).loadUserPicture(mUserDetails.image, binding.ivUserPhoto)
+
+            // Set the existing values to the UI and allow user to edit except the Email ID.
+            binding.etFirstName.setText(mUserDetails.firstName)
+            binding.etLastName.setText(mUserDetails.lastName)
+
+            binding.etEmail.isEnabled = false
+            binding.etEmail.setText(mUserDetails.email)
+
+            if (mUserDetails.mobile != 0L) {
+                binding.etMobileNumber.setText(mUserDetails.mobile.toString())
+            }
+            if (mUserDetails.gender == Constants.MALE) {
+                binding.rbMale.isChecked = true
+            } else {
+                binding.rbFemale.isChecked = true
+            }
+        }
+        // END
+
+        // Assign the on click event to the user profile photo.
         binding.ivUserPhoto.setOnClickListener(this@UserProfileActivity)
-
-        //save button onclicklistner
+        // Assign the on click event to the SAVE button.
         binding.btnSubmit.setOnClickListener(this@UserProfileActivity)
-
     }
 
     override fun onClick(v: View?) {
@@ -69,22 +99,17 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
                 R.id.iv_user_photo -> {
 
-                    // Here we will check if the permission is already allowed or we need to request for it.
-                    // First of all we will check the READ_EXTERNAL_STORAGE permission and if it is not allowed we will request for the same.
                     if (ContextCompat.checkSelfPermission(
                             this,
                             Manifest.permission.READ_EXTERNAL_STORAGE
                         )
                         == PackageManager.PERMISSION_GRANTED
                     ) {
-
                         Constants.showImageChooser(this@UserProfileActivity)
                     } else {
-
                         /*Requests permissions to be granted to this application. These permissions
                          must be requested in your manifest, they should not be granted to your app,
                          and they should have protection level*/
-
                         ActivityCompat.requestPermissions(
                             this,
                             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -92,16 +117,13 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
                 }
+
                 R.id.btn_submit -> {
-
-
 
                     if (validateUserProfileDetails()) {
 
-
                         // Show the progress dialog.
                         showProgressDialog(resources.getString(R.string.please_wait))
-                        // END
 
                         if (mSelectedImageFileUri != null) {
 
@@ -111,12 +133,9 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                             )
                         } else {
 
-
                             updateUserProfileDetails()
-
                         }
                     }
-
                 }
             }
         }
@@ -195,6 +214,24 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+
+    /**
+     * A function for actionBar Setup.
+     */
+    private fun setupActionBar() {
+
+        setSupportActionBar(binding.toolbarUserProfileActivity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
+        }
+
+        binding.toolbarUserProfileActivity.setNavigationOnClickListener { onBackPressed() }
+    }
+    // END
+
     /**
      * A function to validate the input entries for profile details.
      */
@@ -223,32 +260,46 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
         val userHashMap = HashMap<String, Any>()
 
-        // Here the field which are not editable needs no update. So, we will update user Mobile Number and Gender for now.
+        // Get the FirstName from editText and trim the space
+        val firstName = binding.etFirstName.text.toString().trim { it <= ' ' }
+        if (firstName != mUserDetails.firstName) {
+            userHashMap[Constants.FIRST_NAME] = firstName
+        }
+
+        // Get the LastName from editText and trim the space
+        val lastName = binding.etLastName.text.toString().trim { it <= ' ' }
+        if (lastName != mUserDetails.lastName) {
+            userHashMap[Constants.LAST_NAME] = lastName
+        }
+
 
         // Here we get the text from editText and trim the space
         val mobileNumber = binding.etMobileNumber.text.toString().trim { it <= ' ' }
-
         val gender = if (binding.rbMale.isChecked) {
             Constants.MALE
         } else {
             Constants.FEMALE
         }
 
-
         if (mUserProfileImageURL.isNotEmpty()) {
             userHashMap[Constants.IMAGE] = mUserProfileImageURL
         }
 
-
-        if (mobileNumber.isNotEmpty()) {
+        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetails.mobile.toString()) {
             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
         }
 
-        userHashMap[Constants.GENDER] = gender
+        if (gender.isNotEmpty() && gender != mUserDetails.gender) {
+            userHashMap[Constants.GENDER] = gender
+        }
+
+        // Here if user is about to complete the profile then update the field or else no need.
         // 0: User profile is incomplete.
         // 1: User profile is completed.
-        userHashMap[Constants.COMPLETE_PROFILE] = 1
-
+        if (mUserDetails.profileCompleted == 0) {
+            userHashMap[Constants.COMPLETE_PROFILE] = 1
+        }
+        // END
 
         // call the registerUser function of FireStore class to make an entry in the database.
         FirestoreClass().updateUserProfileData(
@@ -256,7 +307,6 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             userHashMap
         )
     }
-    // END
 
     /**
      * A function to notify the success result and proceed further accordingly after updating the user details.
@@ -274,7 +324,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
 
         // Redirect to the Main Screen after profile completion.
-        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+        startActivity(Intent(this@UserProfileActivity, DashboardActivity::class.java))
         finish()
     }
 
@@ -288,6 +338,5 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         mUserProfileImageURL = imageURL
 
         updateUserProfileDetails()
-
     }
 }
