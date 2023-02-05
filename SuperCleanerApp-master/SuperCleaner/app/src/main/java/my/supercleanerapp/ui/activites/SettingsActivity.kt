@@ -1,18 +1,23 @@
 package my.supercleanerapp.ui.activites
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import com.google.firebase.auth.FirebaseAuth
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivitySettingsBinding
 import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.User
+import my.supercleanerapp.utils.Constants
 import my.supercleanerapp.utils.GlideLoader
 
 /**
  * Setting screen of the app.
  */
-class SettingsActivity : BaseActivity() {
+class SettingsActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding:ActivitySettingsBinding
+    private lateinit var mUserDetails: User
 
     /**
      * This function is auto created by Android when the Activity Class is created.
@@ -27,6 +32,43 @@ class SettingsActivity : BaseActivity() {
 
 
         setupActionBar()
+
+        // onclick event to the edit text.
+        binding.tvEdit.setOnClickListener(this@SettingsActivity)
+
+
+        // onclick event to the logout button.
+        binding.btnLogout.setOnClickListener(this@SettingsActivity)
+
+
+    }
+
+
+    override fun onClick(v: View?) {
+        if (v != null) {
+            when (v.id) {
+
+
+                R.id.tv_edit -> {
+                    val intent = Intent(this@SettingsActivity, UserProfileActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_USER_DETAILS, mUserDetails)
+                    startActivity(intent)
+                }
+                // END
+
+
+                R.id.btn_logout -> {
+
+                    FirebaseAuth.getInstance().signOut()
+
+                    val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                }
+                // END
+            }
+        }
     }
 
     override fun onResume() {
@@ -67,7 +109,7 @@ class SettingsActivity : BaseActivity() {
      */
     fun userDetailsSuccess(user: User) {
 
-
+        mUserDetails = user
         // Hide the progress dialog
         hideProgressDialog()
 
