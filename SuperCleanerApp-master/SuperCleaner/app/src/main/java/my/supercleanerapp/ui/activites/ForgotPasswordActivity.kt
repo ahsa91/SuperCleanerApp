@@ -1,6 +1,5 @@
-package my.supercleanerapp.ui.activities
+package my.supercleanerapp.ui.activites
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth

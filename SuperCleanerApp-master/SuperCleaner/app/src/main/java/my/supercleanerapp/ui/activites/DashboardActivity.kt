@@ -1,8 +1,7 @@
-package my.supercleanerapp.ui.activities
+package my.supercleanerapp.ui.activites
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -10,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityDashboardBinding
 ///////////////put nav bar declarations here
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
 

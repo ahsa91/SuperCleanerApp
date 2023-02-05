@@ -1,9 +1,8 @@
-package my.supercleanerapp.ui.activities
+package my.supercleanerapp.ui.activites
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityMainBinding
 import my.supercleanerapp.utils.Constants
 

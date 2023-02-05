@@ -11,9 +11,9 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.supercleanerapp.models.User
-import my.supercleanerapp.ui.activities.LoginActivity
-import my.supercleanerapp.ui.activities.RegisterActivity
-import my.supercleanerapp.ui.activities.UserProfileActivity
+import my.supercleanerapp.ui.activites.LoginActivity
+import my.supercleanerapp.ui.activites.RegisterActivity
+import my.supercleanerapp.ui.activites.UserProfileActivity
 import my.supercleanerapp.utils.Constants
 
 /**

@@ -1,4 +1,4 @@
-package my.supercleanerapp.ui.activities
+package my.supercleanerapp.ui.activites
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
