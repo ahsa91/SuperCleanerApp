@@ -13,6 +13,7 @@ import com.google.firebase.storage.StorageReference
 import my.supercleanerapp.models.User
 import my.supercleanerapp.ui.activites.LoginActivity
 import my.supercleanerapp.ui.activites.RegisterActivity
+import my.supercleanerapp.ui.activites.SettingsActivity
 import my.supercleanerapp.ui.activites.UserProfileActivity
 import my.supercleanerapp.utils.Constants
 
@@ -100,12 +101,22 @@ class FirestoreClass {
                         // Call a function of base activity for transferring the result to it.
                         activity.userLoggedInSuccess(user)
                     }
+
+                    is SettingsActivity ->{
+                        // Call a function of base activity for transferring the result to it.
+                        activity.userDetailsSuccess(user)
+
+                    }
                 }
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error. And print the error in log.
                 when (activity) {
                     is LoginActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                    is SettingsActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
