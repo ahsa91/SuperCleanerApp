@@ -1,7 +1,9 @@
 package my.supercleanerapp.ui.adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +11,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.models.Address
+import my.supercleanerapp.ui.activites.AddEditAddressActivity
+import my.supercleanerapp.utils.Constants
 
-class AddressListAdapter (
-    private val context: Context,
-    private var list: ArrayList<Address>
-    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AddressListAdapter (private val context: Context, private var list: ArrayList<Address>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         /**
          * Inflates the item views which is designed in xml layout file
@@ -66,4 +67,27 @@ class AddressListAdapter (
          * A ViewHolder describes an item view and metadata about its place within the RecyclerView.
          */
         private class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+
+
+    /**
+     * A function to edit the address details and pass the existing details through intent.
+     *
+     * @param activity
+     * @param position
+     */
+    fun notifyEditItem(activity: Activity, position: Int) {
+        val intent = Intent(context, AddEditAddressActivity::class.java)
+
+        intent.putExtra(Constants.EXTRA_ADDRESS_DETAILS, list[position])
+        // END
+        activity.startActivity(intent)
+
+        notifyItemChanged(position) // Notify any registered observers that the item at position has changed.
+    }
+
+
+
+
+
     }

@@ -4,21 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityAddressListBinding
 import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.Address
 import my.supercleanerapp.ui.adapters.AddressListAdapter
+import my.supercleanerapp.utils.SwipeToEditCallback
 
 @Suppress("DEPRECATION")
 class AddressListActivity : BaseActivity() {
+
+
 
     private lateinit var binding:ActivityAddressListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityAddressListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         setupActionBar()
         //click event for the Add Address and launch the AddEditAddressActivity.
@@ -75,6 +82,23 @@ class AddressListActivity : BaseActivity() {
 
             val addressAdapter = AddressListAdapter(this@AddressListActivity, addressList)
             binding.rvAddressList.adapter = addressAdapter
+
+            val editSwipeHandler = object : SwipeToEditCallback(this) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                // Call the notifyEditItem function of the adapter class.
+
+                    val adapter = binding.rvAddressList.adapter as AddressListAdapter
+                    adapter.notifyEditItem(
+                        this@AddressListActivity,
+                        viewHolder.adapterPosition
+                    )
+
+                }
+            }
+            val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
+            editItemTouchHelper.attachToRecyclerView(binding.rvAddressList)
+            // END
         } else {
             binding.rvAddressList.visibility = View.GONE
             binding.tvNoAddressFound.visibility = View.VISIBLE

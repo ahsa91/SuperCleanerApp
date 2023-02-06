@@ -11,7 +11,11 @@ import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.Address
 import my.supercleanerapp.utils.Constants
 
+@Suppress("DEPRECATION")
+
 class AddEditAddressActivity : BaseActivity() {
+
+    private var mAddressDetails: Address? = null
 
     private lateinit var binding:ActivityAddEditAddressBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +23,10 @@ class AddEditAddressActivity : BaseActivity() {
         binding=ActivityAddEditAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (intent.hasExtra(Constants.EXTRA_ADDRESS_DETAILS)) {
+            mAddressDetails =
+                intent.getParcelableExtra(Constants.EXTRA_ADDRESS_DETAILS)!!
+        }
 
         setupActionBar()
 
