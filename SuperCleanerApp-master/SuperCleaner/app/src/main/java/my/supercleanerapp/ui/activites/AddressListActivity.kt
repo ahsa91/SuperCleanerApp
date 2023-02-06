@@ -41,4 +41,6 @@ class AddressListActivity : AppCompatActivity() {
         binding.toolbarAddressListActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
+
+
 }
