@@ -1,13 +1,18 @@
 package my.supercleanerapp.ui.activites
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityAddressListBinding
+import my.supercleanerapp.firestore.FirestoreClass
+import my.supercleanerapp.models.Address
+import my.supercleanerapp.ui.adapters.AddressListAdapter
 
 @Suppress("DEPRECATION")
-class AddressListActivity : AppCompatActivity() {
+class AddressListActivity : BaseActivity() {
 
     private lateinit var binding:ActivityAddressListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +26,9 @@ class AddressListActivity : AppCompatActivity() {
             val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
             startActivity(intent)
         }
+        //get the address list.
+        getAddressList()
+
 
     }
 
@@ -39,6 +47,49 @@ class AddressListActivity : AppCompatActivity() {
         }
 
         binding.toolbarAddressListActivity.setNavigationOnClickListener { onBackPressed() }
+    }
+
+    /**
+     * A function to get the success result of address list from cloud firestore.
+     *
+     * @param addressList
+     */
+    fun successAddressListFromFirestore(addressList: ArrayList<Address>) {
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+
+        // Print all the list of addresses in the log with name.
+        for (i in addressList) {
+
+            Log.i("Name and Address", "${i.name} ::  ${i.address}")
+        }
+        if (addressList.size > 0) {
+
+            binding.rvAddressList.visibility = View.VISIBLE
+            binding.tvNoAddressFound.visibility = View.GONE
+
+            binding.rvAddressList.layoutManager = LinearLayoutManager(this@AddressListActivity)
+            binding.rvAddressList.setHasFixedSize(true)
+
+            val addressAdapter = AddressListAdapter(this@AddressListActivity, addressList)
+            binding.rvAddressList.adapter = addressAdapter
+        } else {
+            binding.rvAddressList.visibility = View.GONE
+            binding.tvNoAddressFound.visibility = View.VISIBLE
+        }
+    }
+
+    /**
+     * A function to get the list of address from cloud firestore.
+     */
+    private fun getAddressList() {
+
+        // Show the progress dialog.
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().getAddressesList(this@AddressListActivity)
     }
 
 

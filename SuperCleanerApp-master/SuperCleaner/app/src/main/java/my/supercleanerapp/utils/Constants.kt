@@ -37,6 +37,7 @@ object Constants {
     const val OFFICE: String = "Office"
     const val OTHER: String = "Other"
     const val ADDRESSES: String = "addresses"
+    const val USER_ID: String = "user_id"
 
 
 
