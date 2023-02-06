@@ -56,6 +56,11 @@
     <dimen name="settings_lbl_addresses_textSize">18sp</dimen>
     <dimen name="settings_button_marginStartEnd">50dp</dimen>
     <dimen name="settings_button_marginTopBottom">16dp</dimen>
+    <dimen name="btn_add_address_margin">16dp</dimen>
+    <dimen name="btn_add_address_padding">16dp</dimen>
+    <dimen name="add_address_textSize">18sp</dimen>
+    <dimen name="rv_address_list_marginTop">16dp</dimen>
+    <dimen name="no_data_found_textSize">20sp</dimen>
 
 
 </resources>

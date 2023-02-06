@@ -40,7 +40,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         // onclick event to the logout button.
         binding.btnLogout.setOnClickListener(this@SettingsActivity)
 
-
+        binding.llAddress.setOnClickListener(this@SettingsActivity)
     }
 
 
@@ -54,7 +54,11 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                     intent.putExtra(Constants.EXTRA_USER_DETAILS, mUserDetails)
                     startActivity(intent)
                 }
-                // END
+
+                R.id.ll_address -> {
+                    val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
+                    startActivity(intent)
+                }
 
 
                 R.id.btn_logout -> {

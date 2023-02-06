@@ -60,6 +60,10 @@
     <string name="lbl_addresses">Addresses</string>
     <string name="btn_lbl_logout">Logout</string>
     <string name="title_edit_profile">EDIT PROFILE</string>
+    <string name="title_address_list">ADDRESS LIST</string>
+    <string name="no_address_found">No Address Found!</string>
+    <string name="lbL_add_address">Add Address</string>
+
 
 
 </resources>
