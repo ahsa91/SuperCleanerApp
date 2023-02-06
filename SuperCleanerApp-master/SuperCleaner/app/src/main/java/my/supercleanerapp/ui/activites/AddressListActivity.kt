@@ -1,5 +1,6 @@
 package my.supercleanerapp.ui.activites
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import my.supercleanerapp.R
@@ -15,6 +16,11 @@ class AddressListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupActionBar()
+        //click event for the Add Address and launch the AddEditAddressActivity.
+        binding.tvAddAddress.setOnClickListener {
+            val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

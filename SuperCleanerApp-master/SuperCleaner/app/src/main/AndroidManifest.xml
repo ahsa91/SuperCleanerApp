@@ -13,11 +13,17 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activites.AddressListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.activites.AddEditAddressActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="false">
+
         </activity>
+        <activity
+            android:name=".ui.activites.AddressListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.activites.SettingsActivity"
             android:exported="true"
