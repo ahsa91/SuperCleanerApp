@@ -67,7 +67,7 @@
     <string name="hint_full_name">Full name</string>
     <string name="hint_phone_number">Phone number</string>
     <string name="hint_address">Address</string>
-    <string name="hint_zip_code">ZipCode</string>
+    <string name="hint_post_code">PostCode</string>
     <string name="hint_additional_note">Additional note</string>
     <string name="hint_other_details">Other details</string>
     <string name="lbl_home">HOME</string>
@@ -78,5 +78,7 @@
     <string name="err_msg_please_enter_address">Please enter address.</string>
     <string name="err_msg_please_enter_post_code">Please enter post-code.</string>
     <string name="err_msg_please_enter_other_details">Please enter other details.</string>
+    <string name="err_your_address_added_successfully">Your address is added successfully.</string>
+
 
 </resources>

@@ -3,6 +3,8 @@ package my.supercleanerapp.ui.activites
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
+import android.widget.Toast
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityAddEditAddressBinding
 import my.supercleanerapp.firestore.FirestoreClass
@@ -19,6 +21,20 @@ class AddEditAddressActivity : BaseActivity() {
 
 
         setupActionBar()
+
+        //checked change listener on click of radio buttons for the address type.
+        binding.rgType.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rb_other) {
+                binding.tilOtherDetails.visibility = View.VISIBLE
+            } else {
+                binding.tilOtherDetails.visibility = View.GONE
+            }
+        }
+
+        //click event of submit button and save the address.
+        binding.btnSubmitAddress.setOnClickListener {
+            saveAddressToFirestore()
+        }
 
     }
 
@@ -124,7 +140,28 @@ class AddEditAddressActivity : BaseActivity() {
                 addressType,
                 otherDetails
             )
+
+            //Call the function to save the address.
+
+            FirestoreClass().addAddress(this@AddEditAddressActivity, addressModel)
         }
+
     }
-// END
+
+    /**
+     * A function to notify the success result of address saved.
+     */
+    fun addUpdateAddressSuccess() {
+
+        // Hide progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@AddEditAddressActivity,
+            resources.getString(R.string.err_your_address_added_successfully),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        finish()
+    }
 }

@@ -10,11 +10,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import my.supercleanerapp.models.Address
 import my.supercleanerapp.models.User
-import my.supercleanerapp.ui.activites.LoginActivity
-import my.supercleanerapp.ui.activites.RegisterActivity
-import my.supercleanerapp.ui.activites.SettingsActivity
-import my.supercleanerapp.ui.activites.UserProfileActivity
+import my.supercleanerapp.ui.activites.*
 import my.supercleanerapp.utils.Constants
 
 /**
@@ -221,5 +219,35 @@ class FirestoreClass {
                     exception
                 )
             }
+    }
+    /**
+     * A function to add address to the cloud firestore.
+     *
+     * @param activity
+     * @param addressInfo
+     */
+    fun addAddress(activity: AddEditAddressActivity, addressInfo: Address) {
+
+        // Collection name address.
+        mFireStore.collection(Constants.ADDRESSES)
+            .document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .set(addressInfo, SetOptions.merge())
+            .addOnSuccessListener {
+
+
+                // Here call a function of base activity for transferring the result to it.
+                activity.addUpdateAddressSuccess()
+
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while adding the address.",
+                    e
+                )
+            }
+
     }
 }
