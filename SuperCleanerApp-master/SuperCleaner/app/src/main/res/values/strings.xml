@@ -88,5 +88,10 @@
     <string name="et_hint_service_title">Give a title to the service</string>
     <string name="et_hint_service_price">Give the Service Price</string>
     <string name="et_hint_service_description">Give a description of the service</string>
+    <string name="err_msg_select_service_image">Please select service image</string>
+    <string name="err_msg_enter_service_title">Please enter the title of the service</string>
+    <string name="err_msg_enter_product_price">Please enter the price of the service</string>
+    <string name="err_msg_enter_product_description">Please give a description of the service</string>
+    <string name="service_uploaded_success_message">service uploaded successfully</string>
 
 </resources>

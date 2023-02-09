@@ -14,6 +14,7 @@ object Constants {
     // Firebase Constants
     // This  is used for the collection name for USERS.
     const val USERS: String = "users"
+    const val SERVICES: String = "services"
     const val MYSUPERCLEANERAPP_PREFERENCES: String = "MyShopPalPrefs"
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
@@ -39,14 +40,7 @@ object Constants {
     const val ADDRESSES: String = "addresses"
     const val USER_ID: String = "user_id"
     const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
-
-
-
-
-
-
-
-
+    const val SERVICE_IMAGE: String=""
 
 
 

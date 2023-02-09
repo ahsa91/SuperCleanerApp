@@ -2,20 +2,25 @@ package my.supercleanerapp.ui.activites
 
 import android.Manifest
 import android.app.Activity
+import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityAddServiceBinding
+import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.utils.Constants
 import my.supercleanerapp.utils.GlideLoader
 import java.io.IOException
+
+@Suppress("DEPRECATION")
 
 class AddServiceActivity :  BaseActivity(), View.OnClickListener {
 
@@ -84,12 +89,12 @@ class AddServiceActivity :  BaseActivity(), View.OnClickListener {
                     }
                 }
 
-//                R.id.btn_submit -> {
-//                    if (validateServiceDetails()) {
-//
-//                        uploadServiceImage()
-//                    }
-//                }
+                R.id.btn_submit -> {
+                    if (validateServiceDetails()) {
+
+                        uploadServiceImage()
+                    }
+                }
             }
         }
     }
@@ -151,6 +156,108 @@ class AddServiceActivity :  BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+    /**
+     * A function to validate the product details.
+     */
+    private fun validateServiceDetails(): Boolean {
+        return when {
+
+            mSelectedImageFileUri == null -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_select_service_image), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.etServiceTitle.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_service_title), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.etServicePrice.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_price), true)
+                false
+            }
+
+            TextUtils.isEmpty(binding.etServiceDescription.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_enter_product_description),
+                    true
+                )
+                false
+            }
+
+            else -> {
+                true
+            }
+        }
+    }
+
+    /**
+     * A function to upload the selected service image to firebase cloud storage.
+     */
+    private fun uploadServiceImage() {
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().uploadImageToCloudStorage(
+            this@AddServiceActivity,
+            mSelectedImageFileUri,
+            Constants.SERVICE_IMAGE
+        )
+    }
+
+    /**
+     * A function to get the successful result of product image upload.
+     */
+    fun imageUploadSuccess(imageURL: String) {
+
+        // Initialize the global image url variable.
+        mServiceImageURL = imageURL
+
+        uploadServiceDetails()
+    }
+
+    private fun uploadServiceDetails() {
+
+        // Get the logged in username from the SharedPreferences that we have stored at a time of login.
+        val username =
+            this.getSharedPreferences(Constants.MYSUPERCLEANERAPP_PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.LOGGED_IN_USERNAME, "")!!
+
+        // Here we get the text from editText and trim the space
+        val service = my.supercleanerapp.models.Service(
+            FirestoreClass().getCurrentUserID(),
+            username,
+            binding.etServiceTitle.text.toString().trim { it <= ' ' },
+            binding.etServicePrice.text.toString().trim { it <= ' ' },
+            binding.etServiceDescription.text.toString().trim { it <= ' ' },
+            mServiceImageURL
+        )
+
+        FirestoreClass().uploadProductDetails(this@AddServiceActivity, service)
+    }
+
+
+    /**
+     * A function to return the successful result of service upload.
+     */
+    fun serviceUploadSuccess() {
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@AddServiceActivity,
+            resources.getString(R.string.service_uploaded_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        finish()
+    }
+
+
+
+
 
 
 }
