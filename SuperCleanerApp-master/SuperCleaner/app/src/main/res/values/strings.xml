@@ -84,5 +84,9 @@
     <string name="err_your_address_deleted_successfully">Your address is deleted successfully.</string>
     <string name="msg_your_address_updated_successfully">Your address is updated successfully.</string>
     <string name="action_add_service">Add Service</string>
+    <string name="title_add_service">Add Service</string>
+    <string name="et_hint_service_title">Give a title to the service</string>
+    <string name="et_hint_service_price">Give the Service Price</string>
+    <string name="et_hint_service_description">Give a description of the service</string>
 
 </resources>

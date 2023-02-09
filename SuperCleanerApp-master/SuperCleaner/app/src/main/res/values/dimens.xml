@@ -72,5 +72,8 @@
     <dimen name="address_details_textSize">14sp</dimen>
     <dimen name="address_details_marginTop">2dp</dimen>
 
+    <dimen name="add_service_header_image_height">250dp</dimen>
+    <dimen name="add_update_service_icon_padding">16dp</dimen>
+
 
 </resources>
