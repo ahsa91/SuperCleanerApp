@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_products"
+        android:id="@+id/navigation_services"
         android:name="my.supercleanerapp.ui.fragments.ServicesFragment"
         android:label="@string/title_services"
         tools:layout="@layout/fragment_services" />
