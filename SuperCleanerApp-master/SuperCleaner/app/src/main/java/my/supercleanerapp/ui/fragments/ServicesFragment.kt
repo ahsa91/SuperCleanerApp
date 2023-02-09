@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import my.supercleanerapp.R
 
-class ProductsFragment : Fragment() {
+class ServicesFragment : Fragment() {
 
     /*private lateinit var homeViewModel: HomeViewModel*/
 
@@ -20,7 +20,7 @@ class ProductsFragment : Fragment() {
         /*homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)*/
 
-        val root = inflater.inflate(R.layout.fragment_products, container, false)
+        val root = inflater.inflate(R.layout.fragment_services, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         textView.text = "This is home Fragment"
 
