@@ -54,7 +54,7 @@ open class MyServicesListAdapter(
             GlideLoader(context).loadServicePicture(model.image, holder.itemView.findViewById<ImageView>(R.id.iv_item_image))
 
             holder.itemView.findViewById<TextView>(R.id.tv_item_name).text = model.title
-            holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "$${model.price}"
+            holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "€${model.price}"
 
 //            // TODO Step 4: Assigning the click event to the delete button.
 //            // START
