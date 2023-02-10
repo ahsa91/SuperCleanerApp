@@ -7,16 +7,21 @@ import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
+import my.supercleanerapp.databinding.FragmentServicesBinding
 import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.Service
 import my.supercleanerapp.ui.activites.AddServiceActivity
+import my.supercleanerapp.ui.adapters.MyServicesListAdapter
 
 
 @Suppress("DEPRECATION")
 
 class ServicesFragment : BaseFragment() {
 
+    private var _fragBinding:FragmentServicesBinding?=null
+    private val fragBinding get() = _fragBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +35,9 @@ class ServicesFragment : BaseFragment() {
     ): View? {
         /*homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)*/
-
-        val root = inflater.inflate(R.layout.fragment_services, container, false)
+        _fragBinding = FragmentServicesBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
+//        val root = inflater.inflate(R.layout.fragment_services, container, false)
 
         /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
@@ -73,23 +79,23 @@ class ServicesFragment : BaseFragment() {
             Log.i("Product name",i.title)
         }
 
-//        if (servicesList.size > 0) {
-//            rv_my_product_items.visibility = View.VISIBLE
-//            tv_no_products_found.visibility = View.GONE
-//
-//            rv_my_product_items.layoutManager = LinearLayoutManager(activity)
-//            rv_my_product_items.setHasFixedSize(true)
-//
-//            // TODO Step 7: Pass the third parameter value.
-//            // START
-//            val adapterProducts =
-//                MyProductsListAdapter(requireActivity(), servicesList, this@ServicesFragment)
-//            // END
-//            rv_my_product_items.adapter = adapterProducts
-//        } else {
-//            rv_my_product_items.visibility = View.GONE
-//            tv_no_products_found.visibility = View.VISIBLE
-//        }
+
+        if (servicesList.size > 0) {
+            fragBinding.rvMyServiceItems.visibility = View.VISIBLE
+            fragBinding.tvNoServicesFound.visibility = View.GONE
+
+            fragBinding.rvMyServiceItems.layoutManager = LinearLayoutManager(activity)
+            fragBinding.rvMyServiceItems.setHasFixedSize(true)
+
+
+            val adapterProducts =
+                MyServicesListAdapter(requireActivity(), servicesList, this@ServicesFragment)
+
+            fragBinding.rvMyServiceItems.adapter = adapterProducts
+        } else {
+            fragBinding.rvMyServiceItems.visibility = View.GONE
+            fragBinding.tvNoServicesFound.visibility = View.VISIBLE
+        }
     }
 
     private fun getServiceListFromFireStore() {

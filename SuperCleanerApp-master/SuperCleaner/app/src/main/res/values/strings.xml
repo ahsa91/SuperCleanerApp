@@ -94,6 +94,5 @@
     <string name="err_msg_enter_product_description">Please give a description of the service</string>
     <string name="service_uploaded_success_message">service uploaded successfully</string>
     <string name="no_services_added_yet">No services added yet</string>
-    <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
