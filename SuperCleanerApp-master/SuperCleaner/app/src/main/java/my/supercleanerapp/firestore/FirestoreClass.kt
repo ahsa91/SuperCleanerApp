@@ -551,6 +551,35 @@ class FirestoreClass {
             }
     }
 
+    /**
+     * A function to get the product details based on the product id.
+     */
+    fun getServiceDetails(activity: ServiceDetailsActivity, productId: String) {
+
+        // The collection name for SERVICES
+        mFireStore.collection(Constants.SERVICES)
+            .document(productId)
+            .get() // Will get the document snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the product details in the form of document.
+                Log.e(activity.javaClass.simpleName, document.toString())
+
+                // Convert the snapshot to the object of service data model class.
+                val service = document.toObject(Service::class.java)!!
+
+                //  Notify the success result.
+                activity.serviceDetailsSuccess(service)
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                activity.hideProgressDialog()
+
+                Log.e(activity.javaClass.simpleName, "Error while getting the service details.", e)
+            }
+    }
+
 
 
 }
