@@ -1,5 +1,6 @@
 package my.supercleanerapp.ui.adapters
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.utils.GlideLoader
 import my.supercleanerapp.models.Service
+import my.supercleanerapp.ui.activites.ServiceDetailsActivity
 import my.supercleanerapp.ui.fragments.DashboardFragment
 
 @Suppress("DEPRECATION")
@@ -56,6 +58,11 @@ open class MyDashboardListAdapter(
             holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "€${model.price}"
 
 
+        }
+        holder.itemView.setOnClickListener {
+            // Launch Product details screen.
+            val intent = Intent(context, ServiceDetailsActivity::class.java)
+            context.startActivity(intent)
         }
     }
 

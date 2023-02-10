@@ -99,5 +99,7 @@
     <string name="delete_dialog_message">Are you sure you want to delete the product?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="title_service_details">SERVICE DETAILS</string>
+    <string name="lbl_service_description">Service Description</string>
 
 </resources>
