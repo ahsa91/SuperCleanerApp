@@ -12,6 +12,7 @@ import my.supercleanerapp.utils.GlideLoader
 import my.supercleanerapp.models.Service
 import my.supercleanerapp.ui.activites.ServiceDetailsActivity
 import my.supercleanerapp.ui.fragments.DashboardFragment
+import my.supercleanerapp.utils.Constants
 
 @Suppress("DEPRECATION")
 open class MyDashboardListAdapter(
@@ -60,8 +61,9 @@ open class MyDashboardListAdapter(
 
         }
         holder.itemView.setOnClickListener {
-            // Launch Product details screen.
+            // Launch service details screen.
             val intent = Intent(context, ServiceDetailsActivity::class.java)
+            intent.putExtra(Constants.EXTRA_SERVICE_ID, model.service_id)
             context.startActivity(intent)
         }
     }
