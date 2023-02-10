@@ -41,6 +41,8 @@ object Constants {
     const val USER_ID: String = "user_id"
     const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
     const val SERVICE_IMAGE: String=""
+    const val EXTRA_SERVICE_ID: String = "extra_service_id"
+
 
 
 
