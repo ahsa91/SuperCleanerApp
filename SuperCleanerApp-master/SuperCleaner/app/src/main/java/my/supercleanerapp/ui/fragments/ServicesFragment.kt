@@ -11,9 +11,8 @@ import my.supercleanerapp.ui.activites.AddServiceActivity
 
 @Suppress("DEPRECATION")
 
-class ServicesFragment : Fragment() {
+class ServicesFragment : BaseFragment() {
 
-    /*private lateinit var homeViewModel: HomeViewModel*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +28,6 @@ class ServicesFragment : Fragment() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)*/
 
         val root = inflater.inflate(R.layout.fragment_services, container, false)
-        val textView: TextView = root.findViewById(R.id.text_service)
-        textView.text = "This is service Fragment"
 
         /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
