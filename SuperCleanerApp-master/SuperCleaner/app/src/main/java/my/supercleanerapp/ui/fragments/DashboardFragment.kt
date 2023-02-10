@@ -2,14 +2,21 @@ package my.supercleanerapp.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.TextView
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import my.supercleanerapp.R
+import my.supercleanerapp.databinding.FragmentDashboardBinding
+import my.supercleanerapp.firestore.FirestoreClass
+import my.supercleanerapp.models.Service
 import my.supercleanerapp.ui.activites.SettingsActivity
+import my.supercleanerapp.ui.adapters.MyDashboardListAdapter
 
 @Suppress("DEPRECATION")
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseFragment() {
+
+    private var _fragBinding:FragmentDashboardBinding?=null
+    private val fragBinding get() = _fragBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +31,9 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        textView.text = "This is dashboard Fragment"
+        _fragBinding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
+
         return root
     }
 
@@ -50,5 +57,53 @@ class DashboardFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    /**
+     * A function to get the successful service list from cloud firestore.
+     *
+     * @param dashboardList Will receive the service list from cloud firestore.
+     */
+    fun successDashboardListFromFireStore(dashboardList: ArrayList<Service>) {
+
+        // Hide Progress dialog.
+        hideProgressDialog()
+
+        for(i in dashboardList){
+            Log.i("Product name",i.title)
+        }
+
+
+        if (dashboardList.size > 0) {
+            fragBinding.rvMyServiceItems.visibility = View.VISIBLE
+            fragBinding.tvNoServicesFound.visibility = View.GONE
+
+            fragBinding.rvMyServiceItems.layoutManager = LinearLayoutManager(activity)
+            fragBinding.rvMyServiceItems.setHasFixedSize(true)
+
+
+            val adapterServices =
+                MyDashboardListAdapter(requireActivity(), dashboardList, this@DashboardFragment)
+
+            fragBinding.rvMyServiceItems.adapter = adapterServices
+        } else {
+            fragBinding.rvMyServiceItems.visibility = View.GONE
+            fragBinding.tvNoServicesFound.visibility = View.VISIBLE
+        }
+    }
+
+    private fun getDashboardListFromFireStore() {
+        // Show the progress dialog.
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        // Call the function of Firestore class.
+        FirestoreClass().getDashboardList(this@DashboardFragment)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        getDashboardListFromFireStore()
+    }
+
 
 }

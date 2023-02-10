@@ -15,6 +15,7 @@ import my.supercleanerapp.models.Address
 import my.supercleanerapp.models.Service
 import my.supercleanerapp.models.User
 import my.supercleanerapp.ui.activites.*
+import my.supercleanerapp.ui.fragments.DashboardFragment
 import my.supercleanerapp.ui.fragments.ServicesFragment
 import my.supercleanerapp.utils.Constants
 
@@ -447,7 +448,7 @@ class FirestoreClass {
             .addOnSuccessListener { document ->
 
                 // Here we get the list of boards in the form of documents.
-                Log.e("Products List", document.documents.toString())
+                Log.e("Services List", document.documents.toString())
 
                 // Here we have created a new instance for services ArrayList.
                 val servicesList: ArrayList<Service> = ArrayList()
@@ -471,6 +472,50 @@ class FirestoreClass {
                 // Hide the progress dialog if there is any error based on the base class instance.
                 when (fragment) {
                     is ServicesFragment -> {
+                        fragment.hideProgressDialog()
+                    }
+                }
+                Log.e("Get Product List", "Error while getting product list.", e)
+            }
+    }
+
+    /**
+     * A function to get the services list from cloud firestore.
+     *
+     * @param fragment The fragment is passed as parameter as the function is called from fragment and need to the success result.
+     */
+    fun getDashboardList(fragment: Fragment) {
+        // The collection name for SERVICES
+        mFireStore.collection(Constants.SERVICES)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e("Services List", document.documents.toString())
+
+                // Here we have created a new instance for services ArrayList.
+                val servicesList: ArrayList<Service> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val service = i.toObject(Service::class.java)
+                    service!!.service_id = i.id
+
+                    servicesList.add(service)
+                }
+
+                when (fragment) {
+                    is DashboardFragment -> {
+                        fragment.successDashboardListFromFireStore(servicesList)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error based on the base class instance.
+                when (fragment) {
+                    is DashboardFragment -> {
                         fragment.hideProgressDialog()
                     }
                 }

@@ -87,6 +87,8 @@
     <dimen name="delete_icon_padding">5dp</dimen>
     <dimen name="dashboard_item_paddingTopBottom">5dp</dimen>
 
+    <dimen name="btn_addtocart_textSize">10sp</dimen>
+
 
 
 </resources>

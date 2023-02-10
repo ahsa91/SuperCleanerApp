@@ -1,5 +1,4 @@
 package my.supercleanerapp.ui.adapters
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.utils.GlideLoader
 import my.supercleanerapp.models.Service
-import my.supercleanerapp.ui.fragments.ServicesFragment
+import my.supercleanerapp.ui.fragments.DashboardFragment
 
 @Suppress("DEPRECATION")
-open class MyServicesListAdapter(
+open class MyDashboardListAdapter(
     private val context: Context,
     private var list: ArrayList<Service>,
-    private val fragment: ServicesFragment
+    private val fragment: DashboardFragment
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 // END
 
@@ -29,7 +28,7 @@ open class MyServicesListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_list_layout_service_fragment,
+                R.layout.item_list_layout_dashboard_fragment,
                 parent,
                 false
             )
@@ -56,11 +55,11 @@ open class MyServicesListAdapter(
             holder.itemView.findViewById<TextView>(R.id.tv_item_name).text = model.title
             holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "€${model.price}"
 
-//            // TODO Step 4: Assigning the click event to the delete button.
+//            // TODO Step 4: Assigning the click event to the addtocart button.
 //            // START
 //            holder.itemView.findViewById<TextView>(R.id.ib_delete_product).setOnClickListener {
 //
-//                // TODO Step 8: Now let's call the delete function of the ProductsFragment.
+//                // TODO Step 8: Now let's call the addtocart function of the DashboardFragment.
 //                // START
 //                fragment.deleteProduct(model.product_id)
 //                // END

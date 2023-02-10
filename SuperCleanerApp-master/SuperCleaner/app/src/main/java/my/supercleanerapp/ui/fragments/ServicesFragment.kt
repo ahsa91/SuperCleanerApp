@@ -88,10 +88,10 @@ class ServicesFragment : BaseFragment() {
             fragBinding.rvMyServiceItems.setHasFixedSize(true)
 
 
-            val adapterProducts =
+            val adapterServices =
                 MyServicesListAdapter(requireActivity(), servicesList, this@ServicesFragment)
 
-            fragBinding.rvMyServiceItems.adapter = adapterProducts
+            fragBinding.rvMyServiceItems.adapter = adapterServices
         } else {
             fragBinding.rvMyServiceItems.visibility = View.GONE
             fragBinding.tvNoServicesFound.visibility = View.VISIBLE
