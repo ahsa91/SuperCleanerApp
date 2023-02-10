@@ -95,5 +95,9 @@
     <string name="service_uploaded_success_message">service uploaded successfully</string>
     <string name="no_services_added_yet">No services added yet</string>
     <string name="btn_add_to_cart">Add To Cart</string>
+    <string name="delete_dialog_title">Delete</string>
+    <string name="delete_dialog_message">Are you sure you want to delete the product?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

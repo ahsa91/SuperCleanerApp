@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -120,13 +121,63 @@ class ServicesFragment : BaseFragment() {
      */
     fun deleteService(serviceID: String) {
 
-        // Here we will call the delete function of the FirestoreClass. But, for now lets display the Toast message and call this function from adapter class.
+        showAlertDialogToDeleteProduct(serviceID)
+    }
+
+    /**
+     * A function to notify the success result of servuce deleted from cloud firestore.
+     */
+    fun serviceDeleteSuccess() {
+
+        // Hide the progress dialog
+        hideProgressDialog()
 
         Toast.makeText(
             requireActivity(),
-            "You can now delete the service. $serviceID",
+            resources.getString(R.string.err_your_address_deleted_successfully),
             Toast.LENGTH_SHORT
         ).show()
+
+        // Get the latest service list from cloud firestore.
+        getServiceListFromFireStore()
+    }
+
+    /**
+     * A function to show the alert dialog for the confirmation of delete service from cloud firestore.
+     */
+    private fun showAlertDialogToDeleteProduct(serviceID: String) {
+
+        val builder = AlertDialog.Builder(requireActivity())
+        //set title for alert dialog
+        builder.setTitle(resources.getString(R.string.delete_dialog_title))
+        //set message for alert dialog
+        builder.setMessage(resources.getString(R.string.delete_dialog_message))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        //performing positive action
+        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
+
+            //  Call the function to delete the service from cloud firestore.
+            // Show the progress dialog.
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            // Call the function of Firestore class.
+            FirestoreClass().deleteService(this@ServicesFragment, serviceID)
+            // END
+
+            dialogInterface.dismiss()
+        }
+
+        //performing negative action
+        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, _ ->
+
+            dialogInterface.dismiss()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
 }

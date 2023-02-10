@@ -523,6 +523,34 @@ class FirestoreClass {
             }
     }
 
+    /**
+     * A function to delete the Service from the cloud firestore.
+     */
+    fun deleteService(fragment: ServicesFragment, productId: String) {
+
+        mFireStore.collection(Constants.SERVICES)
+            .document(productId)
+            .delete()
+            .addOnSuccessListener {
+
+
+                // Notify the success result to the base class.
+                fragment.serviceDeleteSuccess()
+
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                fragment.hideProgressDialog()
+
+                Log.e(
+                    fragment.requireActivity().javaClass.simpleName,
+                    "Error while deleting the service.",
+                    e
+                )
+            }
+    }
+
 
 
 }
