@@ -55,16 +55,7 @@ open class MyDashboardListAdapter(
             holder.itemView.findViewById<TextView>(R.id.tv_item_name).text = model.title
             holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "€${model.price}"
 
-//            // TODO Step 4: Assigning the click event to the addtocart button.
-//            // START
-//            holder.itemView.findViewById<TextView>(R.id.ib_delete_product).setOnClickListener {
-//
-//                // TODO Step 8: Now let's call the addtocart function of the DashboardFragment.
-//                // START
-//                fragment.deleteProduct(model.product_id)
-//                // END
-//            }
-//            // END
+
         }
     }
 

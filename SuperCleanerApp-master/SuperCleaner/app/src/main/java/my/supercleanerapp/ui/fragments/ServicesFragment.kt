@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -76,7 +77,7 @@ class ServicesFragment : BaseFragment() {
         hideProgressDialog()
 
         for(i in servicesList){
-            Log.i("Product name",i.title)
+            Log.i("service name",i.title)
         }
 
 
@@ -110,6 +111,22 @@ class ServicesFragment : BaseFragment() {
         super.onResume()
 
         getServiceListFromFireStore()
+    }
+
+    /**
+     * A function that will call the delete function of FirestoreClass that will delete the service added by the user.
+     *
+     * @param serviceID To specify which service need to be deleted.
+     */
+    fun deleteService(serviceID: String) {
+
+        // Here we will call the delete function of the FirestoreClass. But, for now lets display the Toast message and call this function from adapter class.
+
+        Toast.makeText(
+            requireActivity(),
+            "You can now delete the service. $serviceID",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.utils.GlideLoader
@@ -18,7 +19,7 @@ open class MyServicesListAdapter(
     private var list: ArrayList<Service>,
     private val fragment: ServicesFragment
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-// END
+
 
     /**
      * Inflates the item views which is designed in xml layout file
@@ -56,16 +57,14 @@ open class MyServicesListAdapter(
             holder.itemView.findViewById<TextView>(R.id.tv_item_name).text = model.title
             holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "€${model.price}"
 
-//            // TODO Step 4: Assigning the click event to the delete button.
-//            // START
-//            holder.itemView.findViewById<TextView>(R.id.ib_delete_product).setOnClickListener {
-//
-//                // TODO Step 8: Now let's call the delete function of the ProductsFragment.
-//                // START
-//                fragment.deleteProduct(model.product_id)
-//                // END
-//            }
-//            // END
+            //Assigning the click event to the delete button.
+
+            holder.itemView.findViewById<AppCompatImageButton>(R.id.ib_delete_service).setOnClickListener {
+                //call the delete function from ServicesFragment
+                fragment.deleteService(model.service_id)
+
+            }
+
         }
     }
 
