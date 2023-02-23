@@ -3,6 +3,7 @@ package my.supercleanerapp.ui.activites
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityServiceDetailBinding
 import my.supercleanerapp.databinding.ActivitySettingsBinding
@@ -25,11 +26,23 @@ class ServiceDetailsActivity : BaseActivity() {
         if (intent.hasExtra(Constants.EXTRA_SERVICE_ID)) {
             mServiceId =
                 intent.getStringExtra(Constants.EXTRA_SERVICE_ID)!!
-            Log.i("Service Id", mServiceId)
+        }
+
+        var serviceOwnerId: String = ""
+
+        if (intent.hasExtra(Constants.EXTRA_SERVICE_OWNER_ID)) {
+            serviceOwnerId =
+                intent.getStringExtra(Constants.EXTRA_SERVICE_OWNER_ID)!!
         }
 
         //implement actionbar
         setupActionBar()
+        //Now we have the service owner id so if the product which is added by owner himself should not see the button Add To Cart.
+        if (FirestoreClass().getCurrentUserID() == serviceOwnerId) {
+            binding.btnAddToCart.visibility = View.GONE
+        } else {
+            binding.btnAddToCart.visibility = View.VISIBLE
+        }
         //function to get the service details when the activity is launched.
         getServiceDetails()
     }

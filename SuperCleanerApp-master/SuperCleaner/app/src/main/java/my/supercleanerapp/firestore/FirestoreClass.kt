@@ -458,7 +458,6 @@ class FirestoreClass {
 
                     val service = i.toObject(Service::class.java)
                     service!!.service_id = i.id
-
                     servicesList.add(service)
                 }
 
@@ -475,7 +474,7 @@ class FirestoreClass {
                         fragment.hideProgressDialog()
                     }
                 }
-                Log.e("Get Product List", "Error while getting product list.", e)
+                Log.e("Get service List", "Error while getting service list.", e)
             }
     }
 
@@ -484,42 +483,33 @@ class FirestoreClass {
      *
      * @param fragment The fragment is passed as parameter as the function is called from fragment and need to the success result.
      */
-    fun getDashboardList(fragment: Fragment) {
-        // The collection name for SERVICES
+    fun getDashboardList(fragment: DashboardFragment) {
+        // The collection name for PRODUCTS
         mFireStore.collection(Constants.SERVICES)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
             .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
 
                 // Here we get the list of boards in the form of documents.
-                Log.e("Services List", document.documents.toString())
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
 
-                // Here we have created a new instance for services ArrayList.
-                val servicesList: ArrayList<Service> = ArrayList()
+                // Here we have created a new instance for Products ArrayList.
+                val dashboardList: ArrayList<Service> = ArrayList()
 
                 // A for loop as per the list of documents to convert them into Products ArrayList.
                 for (i in document.documents) {
 
-                    val service = i.toObject(Service::class.java)
-                    service!!.service_id = i.id
-
-                    servicesList.add(service)
+                    val service = i.toObject(Service::class.java)!!
+                    service.service_id = i.id
+                    dashboardList.add(service)
                 }
 
-                when (fragment) {
-                    is DashboardFragment -> {
-                        fragment.successDashboardListFromFireStore(servicesList)
-                    }
-                }
+                // Pass the success result to the base fragment.
+                fragment.successDashboardListFromFireStore(dashboardList)
             }
             .addOnFailureListener { e ->
-                // Hide the progress dialog if there is any error based on the base class instance.
-                when (fragment) {
-                    is DashboardFragment -> {
-                        fragment.hideProgressDialog()
-                    }
-                }
-                Log.e("Get Product List", "Error while getting product list.", e)
+                // Hide the progress dialog if there is any error which getting the dashboard items list.
+                fragment.hideProgressDialog()
+                Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list.", e)
             }
     }
 

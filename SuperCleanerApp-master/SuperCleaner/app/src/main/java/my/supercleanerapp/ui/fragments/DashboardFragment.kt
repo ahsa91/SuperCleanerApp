@@ -44,9 +44,8 @@ class DashboardFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
-        when (id) {
+        when (item.itemId) {
 
             R.id.action_settings -> {
 
@@ -67,11 +66,6 @@ class DashboardFragment : BaseFragment() {
 
         // Hide Progress dialog.
         hideProgressDialog()
-
-        for(i in dashboardList){
-            Log.i("Product name",i.title)
-        }
-
 
         if (dashboardList.size > 0) {
             fragBinding.rvMyServiceItems.visibility = View.VISIBLE

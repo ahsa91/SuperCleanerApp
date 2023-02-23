@@ -72,6 +72,9 @@ open class MyServicesListAdapter(
                 // Launch service details screen.
                 val intent = Intent(context, ServiceDetailsActivity::class.java)
                 intent.putExtra(Constants.EXTRA_SERVICE_ID, model.service_id)
+                //The service   owner id is basically the user id of the user who have add the product.
+                intent.putExtra(Constants.EXTRA_SERVICE_OWNER_ID, model.user_id)
+
                 context.startActivity(intent)
             }
 
