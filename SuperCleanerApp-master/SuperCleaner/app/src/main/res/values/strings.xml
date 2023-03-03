@@ -110,5 +110,6 @@
     <string name="lbl_total_amount">Total Amount</string>
     <string name="btn_lbl_checkout">Checkout</string>
     <string name="action_cart">My Cart</string>
+    <string name="lbl_vat">VAT(13.5%)</string>
 
 </resources>
