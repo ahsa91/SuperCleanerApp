@@ -9,6 +9,7 @@ import my.supercleanerapp.R
 import my.supercleanerapp.databinding.FragmentDashboardBinding
 import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.Service
+import my.supercleanerapp.ui.activites.CartListActivity
 import my.supercleanerapp.ui.activites.SettingsActivity
 import my.supercleanerapp.ui.adapters.MyDashboardListAdapter
 
@@ -51,6 +52,10 @@ class DashboardFragment : BaseFragment() {
 
 
                 startActivity(Intent(activity, SettingsActivity::class.java))
+                return true
+            }
+            R.id.action_cart -> {
+                startActivity(Intent(activity, CartListActivity::class.java))
                 return true
             }
         }

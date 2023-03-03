@@ -43,7 +43,9 @@ object Constants {
     const val SERVICE_IMAGE: String=""
     const val EXTRA_SERVICE_ID: String = "extra_service_id"
     const val EXTRA_SERVICE_OWNER_ID: String = "extra_service_owner_id"
-
+    const val DEFAULT_CART_QUANTITY: String = "1"
+    const val CART_ITEMS: String = "cart_items"
+    const val SERVICE_ID: String = "service_id"
 
 
 
