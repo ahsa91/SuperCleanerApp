@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.models.Address
 import my.supercleanerapp.ui.activites.AddEditAddressActivity
+import my.supercleanerapp.ui.activites.CheckoutActivity
 import my.supercleanerapp.utils.Constants
 
-class AddressListAdapter (private val context: Context, private var list: ArrayList<Address>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AddressListAdapter (private val context: Context, private var list: ArrayList<Address>, private val selectAddress: Boolean
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         /**
          * Inflates the item views which is designed in xml layout file
@@ -52,6 +54,14 @@ class AddressListAdapter (private val context: Context, private var list: ArrayL
                 holder.itemView.findViewById<TextView>(R.id.tv_address_type).text = model.type
                 holder.itemView.findViewById<TextView>(R.id.tv_address_details).text = "${model.address}, ${model.postCode}"
                 holder.itemView.findViewById<TextView>(R.id.tv_address_mobile_number).text = model.mobileNumber
+            }
+
+            if (selectAddress) {
+                holder.itemView.setOnClickListener {
+
+                    val intent = Intent(context, CheckoutActivity::class.java)
+                    context.startActivity(intent)
+                }
             }
         }
 

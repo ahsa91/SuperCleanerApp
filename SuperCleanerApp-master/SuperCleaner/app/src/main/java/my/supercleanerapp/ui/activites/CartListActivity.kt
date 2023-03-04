@@ -1,5 +1,6 @@
 package my.supercleanerapp.ui.activites
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import my.supercleanerapp.databinding.ActivityCartListBinding
 import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.Cart
 import my.supercleanerapp.ui.adapters.CartItemsListAdapter
+import my.supercleanerapp.utils.Constants
 
 class CartListActivity : BaseActivity() {
     /**
@@ -17,6 +19,7 @@ class CartListActivity : BaseActivity() {
      */
 
     private lateinit var binding:ActivityCartListBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
@@ -26,6 +29,11 @@ class CartListActivity : BaseActivity() {
 
         setupActionBar()
 
+        binding.btnCheckout.setOnClickListener {
+            val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
+            intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+            startActivity(intent)
+        }
     }
 
 
