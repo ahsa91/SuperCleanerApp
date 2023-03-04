@@ -60,6 +60,7 @@ class AddressListAdapter (private val context: Context, private var list: ArrayL
                 holder.itemView.setOnClickListener {
 
                     val intent = Intent(context, CheckoutActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_SELECTED_ADDRESS, model)
                     context.startActivity(intent)
                 }
             }
