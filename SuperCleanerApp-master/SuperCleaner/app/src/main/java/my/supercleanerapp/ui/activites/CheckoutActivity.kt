@@ -182,14 +182,25 @@ class CheckoutActivity : BaseActivity() {
      */
     fun reservationPlacedSuccess() {
 
+        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList)
+    }
+
+    /**
+     * A function to notify the success result after updating all the required details.
+     */
+    fun allDetailsUpdatedSuccessfully() {
+
+
+        // Hide the progress dialog.
         hideProgressDialog()
 
-        Toast.makeText(this@CheckoutActivity, "Your reservation placed successfully.", Toast.LENGTH_SHORT)
+        Toast.makeText(this@CheckoutActivity, "Your reservation is placed successfully.", Toast.LENGTH_SHORT)
             .show()
 
         val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
+
     }
 }
