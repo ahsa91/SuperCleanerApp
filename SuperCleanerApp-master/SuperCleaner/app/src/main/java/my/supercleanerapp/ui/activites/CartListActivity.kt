@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityCartListBinding
 import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.Cart
+import my.supercleanerapp.models.Service
 import my.supercleanerapp.ui.adapters.CartItemsListAdapter
 import my.supercleanerapp.utils.Constants
+import kotlin.math.round
+
 
 class CartListActivity : BaseActivity() {
     /**
@@ -19,6 +23,8 @@ class CartListActivity : BaseActivity() {
      */
 
     private lateinit var binding:ActivityCartListBinding
+    private lateinit var mServicesList: ArrayList<Service>
+    private lateinit var mCartItemsList: ArrayList<Cart>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
@@ -71,12 +77,25 @@ class CartListActivity : BaseActivity() {
     }
 
     /**
+     * A function to get the success result of product list.
+     *
+     * @param productsList
+     */
+    fun successServicesListFromFireStore(servicesList: ArrayList<Service>) {
+
+        mServicesList = servicesList
+
+        getCartItemsList()
+    }
+
+    /**
      * A function to notify the success result of the cart items list from cloud firestore.
      */
     fun successCartItemsList(cartList: ArrayList<Cart>) {
 
         // Hide progress dialog.
         hideProgressDialog()
+        mCartItemsList = cartList
 
         if (cartList.size > 0) {
 
@@ -87,7 +106,7 @@ class CartListActivity : BaseActivity() {
             binding.rvCartItemsList.layoutManager = LinearLayoutManager(this@CartListActivity)
             binding.rvCartItemsList.setHasFixedSize(true)
 
-            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, cartList)
+            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, mCartItemsList,false)
             binding.rvCartItemsList.adapter = cartListAdapter
 
             var subTotal: Double = 0.0
@@ -108,7 +127,8 @@ class CartListActivity : BaseActivity() {
                 binding.llCheckout.visibility = View.VISIBLE
 
                 val total = subTotal *1.135
-                binding.tvTotalAmount.text = "€$total"
+                val formattedTotal = String.format("%.3f", total) // round to 3 digits after decimal
+                binding.tvTotalAmount.text = "€$formattedTotal"
             } else {
                 binding.llCheckout.visibility = View.GONE
             }
@@ -118,6 +138,31 @@ class CartListActivity : BaseActivity() {
             binding.llCheckout.visibility = View.GONE
             binding.tvNoCartItemFound.visibility = View.VISIBLE
         }
+    }
+
+    /**
+     * A function to notify the user about the item removed from the cart list.
+     */
+    fun itemRemovedSuccess() {
+
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@CartListActivity,
+            resources.getString(R.string.msg_item_removed_successfully),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        getCartItemsList()
+    }
+    /**
+     * A function to notify the user about the item quantity updated in the cart list.
+     */
+    fun itemUpdateSuccess() {
+
+        hideProgressDialog()
+
+        getCartItemsList()
     }
 
 

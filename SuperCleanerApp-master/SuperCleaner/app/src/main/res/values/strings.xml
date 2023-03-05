@@ -119,5 +119,6 @@
     <string name="lbl_cash_on_delivery">Cash On Delivery</string>
     <string name="btn_lbl_place_order">PLACE ORDER</string>
     <string name="title_select_address">select address</string>
+    <string name="msg_item_removed_successfully">item removed successfully</string>
 
 </resources>

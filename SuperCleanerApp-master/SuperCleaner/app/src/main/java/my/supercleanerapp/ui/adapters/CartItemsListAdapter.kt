@@ -9,7 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
+import my.supercleanerapp.firestore.FirestoreClass
 import my.supercleanerapp.models.Cart
+import my.supercleanerapp.ui.activites.CartListActivity
 import my.supercleanerapp.utils.GlideLoader
 
 
@@ -18,7 +20,8 @@ import my.supercleanerapp.utils.GlideLoader
  */
 open class CartItemsListAdapter(
     private val context: Context,
-    private var list: ArrayList<Cart>
+    private var list: ArrayList<Cart>,
+    private val updateCartItems: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     /**
@@ -58,7 +61,15 @@ open class CartItemsListAdapter(
 
             holder.itemView.findViewById<TextView>(R.id.tv_cart_item_title).text = model.title
             holder.itemView.findViewById<TextView>(R.id.tv_cart_item_price).text = "€${model.price}"
-            holder.itemView.findViewById<TextView>(R.id.tv_cart_quantity).text = model.cart_quantity
+            holder.itemView.findViewById<ImageView>(R.id.ib_delete_cart_item).setOnClickListener{
+                when (context) {
+                    is CartListActivity -> {
+                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
+                    }
+                }
+
+                FirestoreClass().removeItemFromCart(context, model.id)
+            }
 
         }
     }

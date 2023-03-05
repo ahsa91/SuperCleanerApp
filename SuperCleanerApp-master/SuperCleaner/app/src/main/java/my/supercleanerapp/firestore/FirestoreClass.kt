@@ -666,8 +666,12 @@ class FirestoreClass {
                     is CartListActivity -> {
                         activity.successCartItemsList(list)
                     }
+
+                    is CheckoutActivity -> {
+                        activity.successCartItemsList(list)
+                    }
                 }
-                // END
+
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is an error based on the activity instance.
@@ -680,6 +684,134 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "Error while getting the cart list items.", e)
             }
     }
+
+    /**
+     * A function to get all the service list from the cloud firestore.
+     *
+     * @param activity The activity is passed as parameter to the function because it is called from activity and need to the success result.
+     */
+
+    fun getAllServicesList(activity: Activity) {
+
+        // The collection name for Services
+        mFireStore.collection(Constants.SERVICES)
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e("Services List", document.documents.toString())
+
+                // Here we have created a new instance for Products ArrayList.
+                val servicesList: ArrayList<Service> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val service = i.toObject(Service::class.java)
+                    service!!.service_id = i.id
+
+                    servicesList.add(service)
+                }
+
+                when (activity) {
+                    is CartListActivity -> {
+                        activity.successServicesListFromFireStore(servicesList)
+                    }
+
+
+                    is CheckoutActivity -> {
+                        activity.successServicesListFromFireStore(servicesList)
+                    }
+
+                }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error based on the base class instance.
+                when (activity) {
+                    is CartListActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                    is CheckoutActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e("Get Services List", "Error while getting all service list.", e)
+            }
+    }
+
+    fun removeItemFromCart(context: Context, cart_id: String) {
+
+        // Cart items collection name
+        mFireStore.collection(Constants.CART_ITEMS)
+            .document(cart_id) // cart id
+            .delete()
+            .addOnSuccessListener {
+
+                // Notify the success result of the removed cart item from the list to the base class.
+                when (context) {
+                    is CartListActivity -> {
+                        context.itemRemovedSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is any error.
+                when (context) {
+                    is CartListActivity -> {
+                        context.hideProgressDialog()
+                    }
+                }
+                Log.e(
+                    context.javaClass.simpleName,
+                    "Error while removing the item from the cart list.",
+                    e
+                )
+            }
+    }
+
+    /**
+     * A function to update the cart item in the cloud firestore.
+     *
+     * @param activity activity class.
+     * @param id cart id of the item.
+     * @param itemHashMap to be updated values.
+     */
+    fun updateMyCart(context: Context, cart_id: String, itemHashMap: HashMap<String, Any>) {
+
+        // Cart items collection name
+        mFireStore.collection(Constants.CART_ITEMS)
+            .document(cart_id) // cart id
+            .update(itemHashMap) // A HashMap of fields which are to be updated.
+            .addOnSuccessListener {
+
+                // Notify the success result of the updated cart items list to the base class.
+                when (context) {
+                    is CartListActivity -> {
+                        context.itemUpdateSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is any error.
+                when (context) {
+                    is CartListActivity -> {
+                        context.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    context.javaClass.simpleName,
+                    "Error while updating the cart item.",
+                    e
+                )
+            }
+    }
+
+
 
 
 }

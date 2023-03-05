@@ -46,7 +46,6 @@
                 android:layout_marginStart="@dimen/checkout_content_marginStartEnd"
                 android:layout_marginTop="@dimen/checkout_content_marginTopBottom"
                 android:layout_marginEnd="@dimen/checkout_content_marginStartEnd"
-                android:layout_marginBottom="@dimen/checkout_content_marginTopBottom"
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
                 android:paddingBottom="@dimen/checkout_content_lbl_padding"
                 android:text="@string/checkout_lbl_product_items"
@@ -197,15 +196,15 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/lbl_shipping_charge"
+                        android:text="@string/lbl_vat"
                         android:textColor="@color/colorDarkGrey"
                         android:textSize="@dimen/checkout_label_value_textSize" />
 
                     <my.supercleanerapp.utils.SCATextView
-                        android:id="@+id/tv_checkout_shipping_charge"
+                        android:id="@+id/tv_vat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$10.0"
+                        android:text="$13.5%"
                         android:textAlignment="center"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/checkout_label_value_textSize" />
