@@ -124,7 +124,6 @@ class CheckoutActivity : BaseActivity() {
         val cartListAdapter = CartItemsListAdapter(this@CheckoutActivity, mCartItemsList, false)
         binding.rvCartListItems.adapter = cartListAdapter
 
-        var mSubTotal: Double = 0.0
 
         for (item in mCartItemsList) {
 
@@ -137,13 +136,13 @@ class CheckoutActivity : BaseActivity() {
         }
 
         binding.tvCheckoutSubTotal.text = "€$mSubTotal"
-        binding.tvVat.text = "€10.0"
+        binding.tvVat.text = "€13.5%"
 
         if (mSubTotal > 0) {
             binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
-            val total = mSubTotal *1.135
-            val formattedTotal = String.format("%.3f", total) // round to 3 digits after decimal
+            val mTotalAmount = mSubTotal *1.135
+            val formattedTotal = String.format("%.3f", mTotalAmount) // round to 3 digits after decimal
             binding.tvCheckoutTotalAmount.text = "€$formattedTotal"
         } else {
             binding.llCheckoutPlaceOrder.visibility = View.GONE
