@@ -11,10 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import my.supercleanerapp.models.Address
-import my.supercleanerapp.models.Cart
-import my.supercleanerapp.models.Service
-import my.supercleanerapp.models.User
+import my.supercleanerapp.models.*
 import my.supercleanerapp.ui.activites.*
 import my.supercleanerapp.ui.fragments.DashboardFragment
 import my.supercleanerapp.ui.fragments.ServicesFragment
@@ -806,6 +803,37 @@ class FirestoreClass {
                 Log.e(
                     context.javaClass.simpleName,
                     "Error while updating the cart item.",
+                    e
+                )
+            }
+    }
+
+    /**
+     * A function to place an order of the user in the cloud firestore.
+     *
+     * @param activity base class
+     * @param reservation Reservation Info
+     */
+    fun placeReservation(activity: CheckoutActivity, reservation: Reservation) {
+
+        mFireStore.collection(Constants.RESERVATIONS)
+            .document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .set(reservation, SetOptions.merge())
+            .addOnSuccessListener {
+
+
+                // Here call a function of base activity for transferring the result to it.
+                activity.reservationPlacedSuccess()
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is any error.
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while placing an reservation.",
                     e
                 )
             }

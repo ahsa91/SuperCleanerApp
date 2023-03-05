@@ -48,7 +48,7 @@ object Constants {
     const val SERVICE_ID: String = "service_id"
     const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
     const val EXTRA_SELECTED_ADDRESS: String = "extra_selected_address"
-
+    const val RESERVATIONS: String = "reservations"
 
 
 

@@ -273,7 +273,7 @@
         </LinearLayout>
 
         <my.supercleanerapp.utils.SCAButton
-            android:id="@+id/btn_place_order"
+            android:id="@+id/btn_place_reservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
