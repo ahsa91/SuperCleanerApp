@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import my.supercleanerapp.R
 
-class OrdersFragment : Fragment() {
+class ReservationsFragment : Fragment() {
 
     /*private lateinit var notificationsViewModel: NotificationsViewModel*/
 
@@ -20,7 +20,7 @@ class OrdersFragment : Fragment() {
         /*notificationsViewModel =
             ViewModelProviders.of(this).get(NotificationsViewModel::class.java)*/
 
-        val root = inflater.inflate(R.layout.fragment_orders, container, false)
+        val root = inflater.inflate(R.layout.fragment_reservations, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
         textView.text = "This is notifications Fragment"
 

@@ -13,8 +13,8 @@
             android:icon="@drawable/ic_vector_services"
             android:title="@string/title_services" />
         <item
-            android:id="@+id/navigation_orders"
+            android:id="@+id/navigation_reservations"
             android:icon="@drawable/ic_vector_orders"
-            android:title="@string/title_orders" />
+            android:title="@string/title_reservations" />
     </group>
 </menu>
