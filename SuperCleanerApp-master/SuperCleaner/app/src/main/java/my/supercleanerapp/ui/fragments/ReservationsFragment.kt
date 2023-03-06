@@ -4,29 +4,80 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import my.supercleanerapp.R
+import my.supercleanerapp.databinding.FragmentReservationsBinding
+import my.supercleanerapp.firestore.FirestoreClass
+import my.supercleanerapp.models.Reservation
+import my.supercleanerapp.ui.adapters.MyReservationsListAdapter
 
-class ReservationsFragment : Fragment() {
+@Suppress("DEPRECATION")
+class ReservationsFragment : BaseFragment() {
 
-    /*private lateinit var notificationsViewModel: NotificationsViewModel*/
+    private var _fragBinding: FragmentReservationsBinding?=null
+    private val fragBinding get() = _fragBinding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // If we want to use the option menu in fragment we need to add it.
+        setHasOptionsMenu(true)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        /*notificationsViewModel =
-            ViewModelProviders.of(this).get(NotificationsViewModel::class.java)*/
 
-        val root = inflater.inflate(R.layout.fragment_reservations, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        textView.text = "This is notifications Fragment"
+        _fragBinding = FragmentReservationsBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
 
-        /*notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
         return root
     }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        getMyReservationsList()
+    }
+
+    /**
+    * A function to get the list of my orders.
+    */
+    private fun getMyReservationsList() {
+        // Show the progress dialog.
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().getMyReservationsList(this@ReservationsFragment)
+    }
+
+    /**
+     * A function to get the success result of the my order list from cloud firestore.
+     *
+     * @param reservationsList List of my orders.
+     */
+    fun populateReservationsListInUI(reservationsList: ArrayList<Reservation>) {
+
+        // Hide the progress dialog.
+        hideProgressDialog()
+
+
+        if (reservationsList.size > 0) {
+
+            fragBinding.rvMyReservationItems.visibility = View.VISIBLE
+            fragBinding.tvNoReservationsFound.visibility = View.GONE
+
+            fragBinding.rvMyReservationItems.layoutManager = LinearLayoutManager(activity)
+            fragBinding.rvMyReservationItems.setHasFixedSize(true)
+
+            val myReservationsAdapter = MyReservationsListAdapter(requireActivity(), reservationsList)
+            fragBinding.rvMyReservationItems.adapter = myReservationsAdapter
+        } else {
+            fragBinding.rvMyReservationItems.visibility = View.GONE
+            fragBinding.tvNoReservationsFound.visibility = View.VISIBLE
+        }
+
+    }
+
+
 }

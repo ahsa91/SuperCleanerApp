@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_services" />
 
     <fragment
-        android:id="@+id/navigation_orders"
+        android:id="@+id/navigation_reservations"
         android:name="my.supercleanerapp.ui.fragments.ReservationsFragment"
-        android:label="@string/title_orders"
+        android:label="@string/title_reservations"
         tools:layout="@layout/fragment_reservations" />
 </navigation>

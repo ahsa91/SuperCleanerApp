@@ -121,5 +121,6 @@
     <string name="btn_lbl_place_order">Make a Reservation</string>
     <string name="title_select_address">select address</string>
     <string name="msg_item_removed_successfully">item removed successfully</string>
+    <string name="no_reservations_placed_yet">no reservations placed yet</string>
 
 </resources>

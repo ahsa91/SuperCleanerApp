@@ -14,6 +14,7 @@ import com.google.firebase.storage.StorageReference
 import my.supercleanerapp.models.*
 import my.supercleanerapp.ui.activites.*
 import my.supercleanerapp.ui.fragments.DashboardFragment
+import my.supercleanerapp.ui.fragments.ReservationsFragment
 import my.supercleanerapp.ui.fragments.ServicesFragment
 import my.supercleanerapp.utils.Constants
 
@@ -809,7 +810,7 @@ class FirestoreClass {
     }
 
     /**
-     * A function to place an order of the user in the cloud firestore.
+     * A function to place an reservation of the user in the cloud firestore.
      *
      * @param activity base class
      * @param reservation Reservation Info
@@ -840,7 +841,7 @@ class FirestoreClass {
     }
 
     /**
-     * A function to update all the required details in the cloud firestore after placing the order successfully.
+     * A function to update all the required details in the cloud firestore after placing the reservation successfully.
      *
      * @param activity Base class.
      * @param cartList List of cart items.
@@ -868,6 +869,36 @@ class FirestoreClass {
 
             Log.e(activity.javaClass.simpleName, "Error while updating all the details after reservations placed.", e)
         }
+    }
+
+    /**
+     * A function to get the list of reservations from cloud firestore.
+     */
+    fun getMyReservationsList(fragment: ReservationsFragment) {
+        mFireStore.collection(Constants.RESERVATIONS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+                val list: ArrayList<Reservation> = ArrayList()
+
+                for (i in document.documents) {
+
+                    val reservationItem = i.toObject(Reservation::class.java)!!
+                    reservationItem.id = i.id
+
+                    list.add(reservationItem)
+                }
+
+                fragment.populateReservationsListInUI(list)
+            }
+            .addOnFailureListener { e ->
+                // Here call a function of base activity for transferring the result to it.
+
+                fragment.hideProgressDialog()
+
+                Log.e(fragment.javaClass.simpleName, "Error while getting the reservations list.", e)
+            }
     }
 
 
