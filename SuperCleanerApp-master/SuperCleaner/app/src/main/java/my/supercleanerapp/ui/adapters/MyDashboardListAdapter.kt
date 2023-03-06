@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,9 @@ open class MyDashboardListAdapter(
     private val context: Context,
     private var list: ArrayList<Service>,
     private val fragment: DashboardFragment
+
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 // END
 
     /**
@@ -30,6 +33,7 @@ open class MyDashboardListAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(
+
             LayoutInflater.from(context).inflate(
                 R.layout.item_list_layout_dashboard_fragment,
                 parent,
@@ -50,7 +54,7 @@ open class MyDashboardListAdapter(
      */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-
+        val serviceButton = holder.itemView.findViewById<TextView>(R.id.tv_service_button)
         if (holder is MyViewHolder) {
 
             GlideLoader(context).loadServicePicture(model.image, holder.itemView.findViewById<ImageView>(R.id.iv_item_image))
@@ -68,6 +72,13 @@ open class MyDashboardListAdapter(
             intent.putExtra(Constants.EXTRA_SERVICE_OWNER_ID, model.user_id)
             context.startActivity(intent)
         }
+        serviceButton.setOnClickListener {
+            val intent = Intent(context, ServiceDetailsActivity::class.java)
+            intent.putExtra(Constants.EXTRA_SERVICE_ID, model.service_id)
+            intent.putExtra(Constants.EXTRA_SERVICE_OWNER_ID, model.user_id)
+            context.startActivity(intent)
+        }
+
     }
 
     /**
@@ -76,6 +87,8 @@ open class MyDashboardListAdapter(
     override fun getItemCount(): Int {
         return list.size
     }
+
+
 
     /**
      * A ViewHolder describes an item view and metadata about its place within the RecyclerView.

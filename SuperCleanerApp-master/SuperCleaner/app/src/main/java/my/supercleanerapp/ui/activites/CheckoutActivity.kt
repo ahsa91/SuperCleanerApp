@@ -3,6 +3,7 @@ package my.supercleanerapp.ui.activites
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,8 @@ import my.supercleanerapp.models.Reservation
 import my.supercleanerapp.models.Service
 import my.supercleanerapp.ui.adapters.CartItemsListAdapter
 import my.supercleanerapp.utils.Constants
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 @Suppress("DEPRECATION")
@@ -128,10 +131,10 @@ class CheckoutActivity : BaseActivity() {
         for (item in mCartItemsList) {
 
 
-            val price = item.price.toDouble()
+            var price = item.price.toDouble()
             val quantity = item.cart_quantity.toInt()
 
-            mSubTotal += (price * quantity)
+            mSubTotal += price
 
         }
 
@@ -141,8 +144,12 @@ class CheckoutActivity : BaseActivity() {
         if (mSubTotal > 0) {
             binding.llCheckoutPlaceOrder.visibility = View.VISIBLE
 
-            val mTotalAmount = mSubTotal *1.135
-            val formattedTotal = String.format("%.3f", mTotalAmount) // round to 3 digits after decimal
+            mTotalAmount = mSubTotal *1.135
+            val decimalFormat = DecimalFormat("#.##") // specify the format pattern
+            decimalFormat.roundingMode = RoundingMode.CEILING
+            Log.d("CheckoutActivity", "mTotalAmount before formatting: $mTotalAmount")
+            var formattedTotal = String.format("%.3f", mTotalAmount) // round to 3 digits after decimal
+            Log.d("CheckoutActivity", "mTotalAmount after formatting: $formattedTotal")
             binding.tvCheckoutTotalAmount.text = "€$formattedTotal"
         } else {
             binding.llCheckoutPlaceOrder.visibility = View.GONE

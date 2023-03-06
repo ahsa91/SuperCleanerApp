@@ -40,7 +40,7 @@
             android:layout_height="wrap_content">
 
             <my.supercleanerapp.utils.SCATextView
-                android:id="@+id/tv_product_items"
+                android:id="@+id/tv_service_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/checkout_content_marginStartEnd"
@@ -48,7 +48,7 @@
                 android:layout_marginEnd="@dimen/checkout_content_marginStartEnd"
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
                 android:paddingBottom="@dimen/checkout_content_lbl_padding"
-                android:text="@string/checkout_lbl_product_items"
+                android:text="@string/checkout_lbl_service_items"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/checkout_lbl_textSize" />
 
@@ -56,7 +56,7 @@
                 android:id="@+id/rv_cart_list_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_product_items" />
+                android:layout_below="@id/tv_service_items" />
 
             <my.supercleanerapp.utils.SCATextView
                 android:id="@+id/tv_selected_address"

@@ -11,6 +11,7 @@ import my.supercleanerapp.databinding.ActivityMyReservationDetailsBinding
 import my.supercleanerapp.models.Reservation
 import my.supercleanerapp.ui.adapters.CartItemsListAdapter
 import my.supercleanerapp.utils.Constants
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit

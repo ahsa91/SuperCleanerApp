@@ -15,6 +15,7 @@ import my.supercleanerapp.models.Service
 import my.supercleanerapp.utils.Constants
 import my.supercleanerapp.utils.GlideLoader
 
+@Suppress("DEPRECATION")
 class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
 
 
@@ -42,6 +43,7 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
         //implement actionbar
         setupActionBar()
         //Now we have the service owner id so if the product which is added by owner himself should not see the button Add To Cart.
+
         if (FirestoreClass().getCurrentUserID() == serviceOwnerId) {
             binding.btnAddToCart.visibility = View.GONE
             binding.btnGoToCart.visibility=View.GONE
@@ -141,6 +143,10 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
         showProgressDialog(resources.getString(R.string.please_wait))
 
         FirestoreClass().addCartItems(this@ServiceDetailsActivity, addToCart)
+        // Hide the AddToCart button if the item is already in the cart.
+        binding.btnAddToCart.visibility = View.GONE
+        // Show the GoToCart button if the item is already in the cart. User can update the quantity from the cart list screen if he wants.
+        binding.btnGoToCart.visibility = View.VISIBLE
     }
     fun addToCartSuccess() {
         // Hide the progress dialog.

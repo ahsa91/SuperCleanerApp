@@ -134,5 +134,8 @@
     <string name="reservation_status_in_process">In Process</string>
     <string name="reservation_status_delivered">Delivered</string>
     <string name="reservation_status_complete">Reservation complete</string>
+    <string name="reservation_details_lbl_address">Address</string>
+    <string name="checkout_lbl_service_items">Service Items</string>
+    <string name="btn_service_details">service details</string>
 
 </resources>

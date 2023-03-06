@@ -144,7 +144,7 @@
                 android:layout_marginEnd="@dimen/my_order_details_content_marginStartEnd"
                 android:paddingTop="@dimen/my_order_details_content_lbl_padding"
                 android:paddingBottom="@dimen/my_order_details_content_lbl_padding"
-                android:text="@string/checkout_lbl_product_items"
+                android:text="@string/checkout_lbl_service_items"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/my_order_details_lbl_textSize" />
 
@@ -162,7 +162,7 @@
                 android:layout_marginBottom="@dimen/my_order_details_content_marginTopBottom"
                 android:paddingTop="@dimen/my_order_details_content_lbl_padding"
                 android:paddingBottom="@dimen/my_order_details_content_lbl_padding"
-                android:text="@string/reservation_details_lbl_shipping_address"
+                android:text="@string/reservation_details_lbl_address"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/my_order_details_lbl_textSize" />
 
@@ -284,7 +284,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/lbl_shipping_charge"
+                        android:text="@string/lbl_vat"
                         android:textColor="@color/colorDarkGrey"
                         android:textSize="@dimen/my_order_details_label_value_textSize" />
 
@@ -295,7 +295,7 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/my_order_details_label_value_textSize"
-                        tools:text="$10.0" />
+                        tools:text="13.5%" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -318,7 +318,7 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorDarkGrey"
                         android:textSize="@dimen/my_order_details_label_value_textSize"
-                        tools:text="$110" />
+                        tools:text="$1" />
                 </LinearLayout>
             </LinearLayout>
 
