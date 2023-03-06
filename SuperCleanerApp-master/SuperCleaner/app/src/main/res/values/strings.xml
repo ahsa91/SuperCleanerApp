@@ -123,4 +123,16 @@
     <string name="msg_item_removed_successfully">item removed successfully</string>
     <string name="no_reservations_placed_yet">no reservations placed yet</string>
 
+    <string name="title_my_order_details">MY ORDER DETAILS</string>
+    <string name="reservation_details_lbl">Reservation Details</string>
+    <string name="reservation_details_lbl_order_id">Reservation ID</string>
+    <string name="reservation_details_lbl_order_date">Reservation Date</string>
+    <string name="reservation_details_lbl_order_status">Reservation Status</string>
+    <string name="reservation_status_pending">Pending</string>
+    <string name="reservation_details_lbl_shipping_address">Shipping Address</string>
+
+    <string name="reservation_status_in_process">In Process</string>
+    <string name="reservation_status_delivered">Delivered</string>
+    <string name="reservation_status_complete">Reservation complete</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package my.supercleanerapp.ui.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,9 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.models.Reservation
+import my.supercleanerapp.ui.activites.MyReservationDetailsActivity
+import my.supercleanerapp.ui.activites.ServiceDetailsActivity
+import my.supercleanerapp.utils.Constants
 import my.supercleanerapp.utils.GlideLoader
 
 @Suppress("DEPRECATION")
@@ -41,6 +45,12 @@ open class MyReservationsListAdapter(
             holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "€${model.total_amount}"
 
             holder.itemView.findViewById<AppCompatImageButton>(R.id.ib_delete_reservation).visibility = View.GONE
+        }
+        holder.itemView.setOnClickListener {
+            // Launch service details screen.
+            val intent = Intent(context, MyReservationDetailsActivity::class.java)
+            intent.putExtra(Constants.EXTRA_MY_RESERVATIONS_DETAILS, model)
+            context.startActivity(intent)
         }
     }
 

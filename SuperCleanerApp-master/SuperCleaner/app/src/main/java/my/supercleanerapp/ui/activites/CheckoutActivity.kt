@@ -169,6 +169,7 @@ class CheckoutActivity : BaseActivity() {
             mSubTotal.toString(),
             "13.5%",
             mTotalAmount.toString(),
+            System.currentTimeMillis()
         )
 
 
