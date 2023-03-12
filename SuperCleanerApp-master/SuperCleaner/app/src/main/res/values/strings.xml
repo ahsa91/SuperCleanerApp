@@ -137,5 +137,6 @@
     <string name="reservation_details_lbl_address">Address</string>
     <string name="checkout_lbl_service_items">Service Items</string>
     <string name="btn_service_details">service details</string>
+    <string name="cart">Cart</string>
 
 </resources>

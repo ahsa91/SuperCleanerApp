@@ -16,5 +16,20 @@
             android:id="@+id/navigation_reservations"
             android:icon="@drawable/ic_vector_orders"
             android:title="@string/title_reservations" />
+        <item
+            android:id="@+id/item_settings"
+            android:icon="@drawable/ic_vector_settings"
+            android:title="@string/title_settings"
+            />
+        <item
+            android:id="@+id/item_cart"
+            android:icon="@drawable/ic_vector_cart"
+            android:title="@string/cart"
+            />
+        <item
+            android:id="@+id/item_logout"
+            android:title="@string/btn_lbl_logout"
+            />
+
     </group>
 </menu>
