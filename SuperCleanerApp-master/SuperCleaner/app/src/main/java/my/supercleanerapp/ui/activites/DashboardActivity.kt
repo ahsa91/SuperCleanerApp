@@ -3,6 +3,7 @@ package my.supercleanerapp.ui.activites
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
@@ -17,19 +18,40 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import my.supercleanerapp.R
 import my.supercleanerapp.databinding.ActivityDashboardBinding
-///////////////put nav bar declarations here
+import my.supercleanerapp.firestore.FirestoreClass
+import my.supercleanerapp.models.User
+import my.supercleanerapp.utils.GlideLoader
+
+
 class DashboardActivity : BaseActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+    private lateinit var mUserDetails: User
+    private var userAppAdmin: Boolean = false // default value is false
 
+    private fun getUserDetails() {
+        // Show the progress dialog
+        showProgressDialog(resources.getString(R.string.please_wait))
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        // Call the function of Firestore class to get the user details from firestore which is already created.
+        FirestoreClass().getUserDetails(this@DashboardActivity)
+        hideProgressDialog()
 
-        binding = ActivityDashboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    }
 
+    fun userDetailsSuccess(user: User) {
+        mUserDetails = user
+        userAppAdmin = mUserDetails.userAppAdmin
+        println("userAppAdmin is $userAppAdmin")
 
+        // Setup navigation with the correct value of userAppAdmin
+        setupNavigation()
+
+        // Hide the progress dialog
+        hideProgressDialog()
+    }
+
+    private fun setupNavigation() {
         supportActionBar!!.setBackgroundDrawable(
             ContextCompat.getDrawable(
                 this@DashboardActivity,
@@ -38,28 +60,38 @@ class DashboardActivity : BaseActivity() {
         )
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        val navBottomView : BottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        val menu: Menu = navView.menu
+        val navigationServicesItem: MenuItem = menu.findItem(R.id.navigation_services)
+
+        if (userAppAdmin) {
+            navigationServicesItem.isVisible = true
+        } else {
+            navigationServicesItem.isVisible = false
+        }
+
+        // Update the bottom navigation view based on userAppAdmin value
+        val navBottomView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        val navBottomMenu: Menu = navBottomView.menu
+        val navBottomServicesItem: MenuItem = navBottomMenu.findItem(R.id.navigation_services)
+
+        if (userAppAdmin) {
+            navBottomServicesItem.isVisible = true
+        } else {
+            navBottomServicesItem.isVisible = false
+        }
+
         val navController = findNavController(R.id.nav_host_fragment_content_dashboard)
 
-
-
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_services, R.id.navigation_dashboard, R.id.navigation_reservations
             ), drawerLayout
         )
 
-
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navBottomView.setupWithNavController(navController)
-        //collapse nav menu after selecting fragment
         navView.setNavigationItemSelectedListener { menuItem ->
-            // Handle menu item clicks here
             when (menuItem.itemId) {
                 R.id.navigation_services -> {
                     navController.navigate(R.id.navigation_services)
@@ -73,15 +105,15 @@ class DashboardActivity : BaseActivity() {
                     navController.navigate(R.id.navigation_reservations)
                     true
                 }
-                R.id.item_settings ->{
+                R.id.item_settings -> {
                     val intent = Intent(this@DashboardActivity, SettingsActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.item_cart ->{
+                R.id.item_cart -> {
                     val intent = Intent(this@DashboardActivity, CartListActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.item_logout ->{
+                R.id.item_logout -> {
                     FirebaseAuth.getInstance().signOut()
 
                     val intent = Intent(this@DashboardActivity, LoginActivity::class.java)
@@ -94,15 +126,27 @@ class DashboardActivity : BaseActivity() {
             drawerLayout.closeDrawers()
             true
         }
-
-
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        getUserDetails()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        getUserDetails()
+    }
+
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_dashboard)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-
-
 }

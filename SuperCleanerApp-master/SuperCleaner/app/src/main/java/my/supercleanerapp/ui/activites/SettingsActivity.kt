@@ -113,6 +113,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
      */
     fun userDetailsSuccess(user: User) {
 
+
         mUserDetails = user
         // Hide the progress dialog
         hideProgressDialog()

@@ -95,6 +95,10 @@ class FirestoreClass {
                     Constants.LOGGED_IN_USERNAME,
                     "${user.firstName} ${user.lastName}"
                 )
+                editor.putBoolean(
+                    Constants.USERAPPADMIN,
+                    user.userAppAdmin
+                )
                 editor.apply()
 
                 when (activity) {
@@ -108,6 +112,11 @@ class FirestoreClass {
                         activity.userDetailsSuccess(user)
 
                     }
+                      is DashboardActivity ->{
+                          // Call a function of base activity for transferring the result to it.
+                          activity.userDetailsSuccess(user)
+
+                      }
                 }
             }
             .addOnFailureListener { e ->
@@ -118,6 +127,9 @@ class FirestoreClass {
                     }
 
                     is SettingsActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is DashboardActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
