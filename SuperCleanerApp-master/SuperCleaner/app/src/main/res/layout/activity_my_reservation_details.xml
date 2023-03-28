@@ -102,8 +102,32 @@
                         android:textColor="@color/colorDarkGrey"
                         android:textSize="@dimen/my_order_details_label_value_textSize" />
 
+
                     <my.supercleanerapp.utils.SCATextView
                         android:id="@+id/tv_reservation_details_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/my_order_details_label_value_textSize"
+                        tools:text="20 Oct 2020" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <my.supercleanerapp.utils.SCATextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/reservation_details_lbl_order_time"
+                        android:textColor="@color/colorDarkGrey"
+                        android:textSize="@dimen/my_order_details_label_value_textSize" />
+
+
+                    <my.supercleanerapp.utils.SCATextView
+                        android:id="@+id/tv_reservation_details_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
@@ -346,7 +370,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/my_order_details_content_marginStartEnd"
-                    android:text="@string/lbl_cash_on_delivery"
+                    android:text="@string/lbl_cash"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/lbl_order_details_textSize" />
             </LinearLayout>

@@ -66,66 +66,16 @@ class MyReservationDetailsActivity : AppCompatActivity() {
 
         binding.tvReservationDetailsId.text = reservationDetails.title
 
+        // Display the selected date
+        binding.tvReservationDetailsDate.text = reservationDetails.reservation_date
 
-        // Date Format in which the date will be displayed in the UI.
-        val dateFormat = "dd MMM yyyy HH:mm"
-        // Create a DateFormatter object for displaying date in specified format.
-        val formatter = SimpleDateFormat(dateFormat, Locale.getDefault())
-
-        // Create a calendar object that will convert the date and time value in milliseconds to date.
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.timeInMillis = reservationDetails.reservation_datetime
-
-        val reservationDateTime = formatter.format(calendar.time)
-        binding.tvReservationDetailsDate.text = reservationDateTime
-        // END
-
-        //change this to payment later
-        // Get the difference between the order date time and current date time in hours.
-        // If the difference in hours is 1 or less then the order status will be PENDING.
-        // If the difference in hours is 2 or greater then 1 then the order status will be PROCESSING.
-        // And, if the difference in hours is 3 or greater then the order status will be DELIVERED.
-
-        val diffInMilliSeconds: Long = System.currentTimeMillis() - reservationDetails.reservation_datetime
-        val diffInHours: Long = TimeUnit.MILLISECONDS.toHours(diffInMilliSeconds)
-        Log.e("Difference in Hours", "$diffInHours")
-
-        when {
-            diffInHours < 1 -> {
-                binding.tvReservationStatus.text = resources.getString(R.string.reservation_status_pending)
-                binding.tvReservationStatus.setTextColor(
-                    ContextCompat.getColor(
-                        this@MyReservationDetailsActivity,
-                        R.color.colorAccent
-                    )
-                )
-            }
-            diffInHours < 2 -> {
-                binding.tvReservationStatus.text = resources.getString(R.string.reservation_status_in_process)
-                binding.tvReservationStatus.setTextColor(
-                    ContextCompat.getColor(
-                        this@MyReservationDetailsActivity,
-                        R.color.colorOrderStatusInProcess
-                    )
-                )
-            }
-            else -> {
-                binding.tvReservationStatus.text = resources.getString(R.string.reservation_status_complete)
-                binding.tvReservationStatus.setTextColor(
-                    ContextCompat.getColor(
-                        this@MyReservationDetailsActivity,
-                        R.color.colorOrderStatusDelivered
-                    )
-                )
-            }
-        }
-        // END
+        // Display the selected time
+        binding.tvReservationDetailsTime.text = reservationDetails.reservation_time
 
         binding.rvMyReservationItemsList.layoutManager = LinearLayoutManager(this@MyReservationDetailsActivity)
         binding.rvMyReservationItemsList.setHasFixedSize(true)
 
-        val cartListAdapter =
-            CartItemsListAdapter(this@MyReservationDetailsActivity, reservationDetails.items, false)
+        val cartListAdapter = CartItemsListAdapter(this@MyReservationDetailsActivity, reservationDetails.items, false)
         binding.rvMyReservationItemsList.adapter = cartListAdapter
 
         binding.tvMyReservationDetailsAddressType.text = reservationDetails.address.type

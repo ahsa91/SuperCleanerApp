@@ -43,7 +43,7 @@
                 android:id="@+id/tv_service_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/checkout_content_marginStartEnd"
+                android:layout_marginStart="@dimen/checkout_content_lbl_padding"
                 android:layout_marginTop="@dimen/checkout_content_marginTopBottom"
                 android:layout_marginEnd="@dimen/checkout_content_marginStartEnd"
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
@@ -59,7 +59,7 @@
                 android:layout_below="@id/tv_service_items" />
 
             <my.supercleanerapp.utils.SCATextView
-                android:id="@+id/tv_selected_address"
+                android:id="@+id/tv_selected_date_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rv_cart_list_items"
@@ -69,9 +69,62 @@
                 android:layout_marginBottom="@dimen/checkout_content_marginTopBottom"
                 android:paddingTop="@dimen/checkout_content_lbl_padding"
                 android:paddingBottom="@dimen/checkout_content_lbl_padding"
+                android:text="@string/checkout_lbl_time_date"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/checkout_lbl_textSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_selected_date_time"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/checkout_content_marginStartEnd"
+                android:paddingEnd="@dimen/checkout_content_marginStartEnd">
+
+                <my.supercleanerapp.utils.SCAButton
+                    android:id="@+id/btn_pick_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/checkout_content_marginStartEnd"
+                    android:paddingEnd="@dimen/checkout_content_marginStartEnd"
+                    android:text="@string/pick_date"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/checkout_button_textSize" />
+
+                <my.supercleanerapp.utils.SCAButton
+                    android:id="@+id/btn_pick_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/checkout_content_marginStartEnd"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/checkout_content_marginStartEnd"
+                    android:paddingEnd="@dimen/checkout_content_marginStartEnd"
+                    android:text="@string/pick_time"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/checkout_button_textSize" />
+
+            </LinearLayout>
+
+            <my.supercleanerapp.utils.SCATextView
+                android:id="@+id/tv_selected_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_selected_date_time"
+                android:layout_marginTop="@dimen/checkout_content_marginStartEnd"
+                android:paddingTop="@dimen/checkout_content_marginStartEnd"
+                android:paddingBottom="@dimen/checkout_content_marginStartEnd"
                 android:text="@string/checkout_lbl_selected_address"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/checkout_lbl_textSize" />
+
+
 
             <LinearLayout
                 android:id="@+id/ll_checkout_address_details"
@@ -84,6 +137,9 @@
                 android:paddingTop="@dimen/checkout_content_paddingTopBottom"
                 android:paddingEnd="@dimen/checkout_content_paddingStartEnd"
                 android:paddingBottom="@dimen/checkout_content_paddingTopBottom">
+
+
+
 
                 <my.supercleanerapp.utils.SCATextView
                     android:id="@+id/tv_checkout_address_type"
@@ -164,6 +220,7 @@
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
                 android:padding="@dimen/ll_checkout_items_receipt">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -249,7 +306,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -263,15 +322,28 @@
                 android:textColor="@color/colorDarkGrey"
                 android:textSize="@dimen/checkout_label_value_textSize" />
 
-            <my.supercleanerapp.utils.SCATextViewBold
-                android:id="@+id/tv_payment_mode"
+            <RadioGroup
+                android:id="@+id/payment_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/card_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Card" />
+
+            </RadioGroup>
+
+            <RadioButton
+                android:id="@+id/cash_radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_cash_on_delivery"
-                android:textAlignment="center"
-                android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/checkout_label_value_textSize" />
+                android:checked="true"
+                android:text="Cash" />
+
         </LinearLayout>
+        </ScrollView>
 
         <my.supercleanerapp.utils.SCAButton
             android:id="@+id/btn_place_reservation"
@@ -294,4 +366,5 @@
             app:layout_constraintTop_toBottomOf="@id/ll_terms_and_condition" />
 
     </LinearLayout>
+
 </RelativeLayout>

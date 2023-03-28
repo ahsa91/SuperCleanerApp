@@ -17,6 +17,7 @@ data class Reservation(
     val sub_total_amount: String = "",
     val vat_charge: String = "",
     val total_amount: String = "",
-    val reservation_datetime: Long = 0L,
+    val reservation_date: String = "",
+    val reservation_time: String = "",
     var id: String = ""
 ) : Parcelable

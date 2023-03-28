@@ -1,10 +1,15 @@
 package my.supercleanerapp.ui.activites
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.DatePicker
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import my.supercleanerapp.R
@@ -18,13 +23,15 @@ import my.supercleanerapp.ui.adapters.CartItemsListAdapter
 import my.supercleanerapp.utils.Constants
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 @Suppress("DEPRECATION")
 
 class CheckoutActivity : BaseActivity() {
 
-    private lateinit var binding:ActivityCheckoutBinding
+    private lateinit var binding: ActivityCheckoutBinding
     private var mAddressDetails: Address? = null
     private lateinit var mServicesList: ArrayList<Service>
     private lateinit var mCartItemsList: ArrayList<Cart>
@@ -33,9 +40,8 @@ class CheckoutActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityCheckoutBinding.inflate(layoutInflater)
+        binding = ActivityCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         setupActionBar()
 
@@ -56,12 +62,86 @@ class CheckoutActivity : BaseActivity() {
             binding.tvMobileNumber.text = mAddressDetails?.mobileNumber
         }
 
-        binding.btnPlaceReservation.setOnClickListener{
+        binding.btnPlaceReservation.setOnClickListener {
             placeAreservation()
         }
 
+        // Set click listeners for "Pick Date" and "Pick Time" buttons
+        binding.btnPickDate.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                this,
+                null,
+                year,
+                month,
+                dayOfMonth
+            )
+
+            datePickerDialog.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
+                val selectedDate = "${monthOfYear + 1}/$dayOfMonth/$year"
+                val isSunday = Calendar.getInstance().apply {
+                    set(year, monthOfYear, dayOfMonth)
+                }.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
+
+                if (isSunday) {
+                    datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).isEnabled = false
+                } else {
+                    datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).isEnabled = true
+                }
+            }
+
+            datePickerDialog.setButton(
+                DialogInterface.BUTTON_POSITIVE,
+                "OK"
+            ) { _, _ ->
+                val day = datePickerDialog.datePicker.dayOfMonth
+                val month = datePickerDialog.datePicker.month
+                val year = datePickerDialog.datePicker.year
+                val selectedDate = "${month + 1}/$day/$year"
+                binding.tvSelectedDateTime.text = selectedDate
+            }
+
+            datePickerDialog.show()
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).isEnabled = false
+        }
+
+        binding.btnPickTime.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            val timePickerDialog = object : TimePickerDialog(
+                this,
+                { _, hourOfDay, minute ->
+                    val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
+                    val currentText = binding.tvSelectedDateTime.text
+                    binding.tvSelectedDateTime.text = "$currentText $selectedTime"
+                },
+                hour,
+                minute,
+                true // Use 24-hour format
+            ) {
+                override fun onTimeChanged(view: TimePicker, hourOfDay: Int, minute: Int) {
+                    if (hourOfDay < 8 || hourOfDay >= 17) {
+                        getButton(TimePickerDialog.BUTTON_POSITIVE).isEnabled = false
+                    } else {
+                        getButton(TimePickerDialog.BUTTON_POSITIVE).isEnabled = true
+                    }
+                }
+            }
+
+            timePickerDialog.show()
+            timePickerDialog.getButton(TimePickerDialog.BUTTON_POSITIVE).isEnabled = false
+        }
+
+
+
         getServiceList()
     }
+
 
     /**
      * A function for actionBar Setup.
@@ -162,10 +242,11 @@ class CheckoutActivity : BaseActivity() {
      * A function to prepare the Order details to place an order.
      */
     private fun placeAreservation() {
-
         // Show the progress dialog.
         showProgressDialog(resources.getString(R.string.please_wait))
 
+        val selectedDate = binding.tvSelectedDateTime.text.split(" ")[0]
+        val selectedTime = binding.tvSelectedDateTime.text.split(" ")[1]
 
         val reservation = Reservation(
             FirestoreClass().getCurrentUserID(),
@@ -176,13 +257,13 @@ class CheckoutActivity : BaseActivity() {
             mSubTotal.toString(),
             "13.5%",
             mTotalAmount.toString(),
-            System.currentTimeMillis()
+            selectedDate, // Pass the selected date
+            selectedTime // Pass the selected time
         )
 
-
         FirestoreClass().placeReservation(this@CheckoutActivity, reservation)
-
     }
+
 
 
     /**

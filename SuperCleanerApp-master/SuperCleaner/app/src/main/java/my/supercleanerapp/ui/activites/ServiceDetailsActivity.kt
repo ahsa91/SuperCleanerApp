@@ -52,7 +52,7 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
         }
 
         binding.btnAddToCart.setOnClickListener(this)
-        binding.btnAddToCart.setOnClickListener(this)
+        binding.btnGoToCart.setOnClickListener(this)
         //function to get the service details when the activity is launched.
         getServiceDetails()
     }
@@ -66,7 +66,12 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
                     addToCart()
                 }
                 R.id.btn_go_to_cart->{
-                    startActivity(Intent(this@ServiceDetailsActivity, CartListActivity::class.java))
+//                    startActivity(Intent(this@ServiceDetailsActivity, CartListActivity::class.java))
+//                    startActivity(intent)
+                    val intent = Intent(this@ServiceDetailsActivity, CartListActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
                 }
             }
         }

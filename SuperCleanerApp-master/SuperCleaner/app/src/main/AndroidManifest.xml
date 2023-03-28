@@ -27,7 +27,8 @@
             android:name=".ui.activites.CartListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.activites.ServiceDetailsActivity"
             android:exported="false"
