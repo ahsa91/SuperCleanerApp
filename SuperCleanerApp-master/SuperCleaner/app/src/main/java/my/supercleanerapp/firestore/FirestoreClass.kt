@@ -838,7 +838,7 @@ class FirestoreClass {
 
                 // Here call a function of base activity for transferring the result to it.
                 activity.reservationPlacedSuccess()
-                // END
+
             }
             .addOnFailureListener { e ->
 

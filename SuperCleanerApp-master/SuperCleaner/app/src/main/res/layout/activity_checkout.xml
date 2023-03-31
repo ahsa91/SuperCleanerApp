@@ -306,43 +306,47 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="388dp"
+            android:layout_height="63dp">
 
-            <my.supercleanerapp.utils.SCATextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/lbl_payment_mode"
-                android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/checkout_label_value_textSize" />
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
 
-            <RadioGroup
-                android:id="@+id/payment_radio_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                <my.supercleanerapp.utils.SCATextView
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/lbl_payment_mode"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/checkout_label_value_textSize" />
 
-                <RadioButton
-                    android:id="@+id/card_radio_button"
+                <RadioGroup
+                    android:id="@+id/payment_method_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Card" />
+                    android:orientation="horizontal">
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/cash_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cash" />
 
-            <RadioButton
-                android:id="@+id/cash_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Cash" />
+                    <RadioButton
+                        android:id="@+id/card_radio_button"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:text="Card" />
 
-        </LinearLayout>
+                </RadioGroup>
+
+            </LinearLayout>
+
         </ScrollView>
 
         <my.supercleanerapp.utils.SCAButton

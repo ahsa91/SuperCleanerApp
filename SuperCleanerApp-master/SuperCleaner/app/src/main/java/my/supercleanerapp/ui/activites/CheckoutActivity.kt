@@ -25,6 +25,8 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
+//import my.supercleanerapp.models.PaymentMethod
+
 
 
 @Suppress("DEPRECATION")
@@ -37,6 +39,7 @@ class CheckoutActivity : BaseActivity() {
     private lateinit var mCartItemsList: ArrayList<Cart>
     private var mSubTotal: Double = 0.0
     private var mTotalAmount: Double = 0.0
+    private var mPaymentMethod: String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,6 +139,18 @@ class CheckoutActivity : BaseActivity() {
             timePickerDialog.show()
             timePickerDialog.getButton(TimePickerDialog.BUTTON_POSITIVE).isEnabled = false
         }
+        binding.paymentMethodGroup.setOnCheckedChangeListener { group, checkedId ->
+
+            when (checkedId) {
+                R.id.cash_radio_button -> {
+                    mPaymentMethod = "Cash"
+                }
+                R.id.card_radio_button -> {
+                    mPaymentMethod = "Card"
+                }
+            }
+        }
+
 
 
 
@@ -238,15 +253,13 @@ class CheckoutActivity : BaseActivity() {
 
     }
 
-    /**
-     * A function to prepare the Order details to place an order.
-     */
     private fun placeAreservation() {
         // Show the progress dialog.
         showProgressDialog(resources.getString(R.string.please_wait))
 
         val selectedDate = binding.tvSelectedDateTime.text.split(" ")[0]
         val selectedTime = binding.tvSelectedDateTime.text.split(" ")[1]
+
 
         val reservation = Reservation(
             FirestoreClass().getCurrentUserID(),
@@ -258,11 +271,13 @@ class CheckoutActivity : BaseActivity() {
             "13.5%",
             mTotalAmount.toString(),
             selectedDate, // Pass the selected date
-            selectedTime // Pass the selected time
+            selectedTime, // Pass the selected time
+            reservation_paymentMethod = mPaymentMethod // Set the payment method value
         )
 
         FirestoreClass().placeReservation(this@CheckoutActivity, reservation)
     }
+
 
 
 

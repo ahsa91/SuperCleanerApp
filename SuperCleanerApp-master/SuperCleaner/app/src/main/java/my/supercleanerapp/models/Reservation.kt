@@ -3,6 +3,13 @@ package my.supercleanerapp.models
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+///**
+// * An enum class to represent the payment methods available for reservations.
+// */
+//enum class PaymentMethod {
+//    CASH,
+//    CARD
+//}
 
 /**
  * A data model class for Reservation item with required fields.
@@ -19,5 +26,7 @@ data class Reservation(
     val total_amount: String = "",
     val reservation_date: String = "",
     val reservation_time: String = "",
+    val reservation_status: Boolean = false,
+    val reservation_paymentMethod: String="",
     var id: String = ""
 ) : Parcelable
