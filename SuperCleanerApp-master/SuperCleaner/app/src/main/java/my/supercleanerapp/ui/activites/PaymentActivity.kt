@@ -102,8 +102,9 @@ class PaymentActivity : AppCompatActivity() {
 
                             binding.checkoutSummary.text = "Thank you for your payment"
                             Toast.makeText(applicationContext, "Payment Done!!", Toast.LENGTH_LONG).show()
-                            val intent = Intent(this@PaymentActivity, DashboardFragment::class.java)
-                            startActivity(intent)
+//                            val intent = Intent(this@PaymentActivity, DashboardFragment::class.java)
+//                            startActivity(intent)
+                            finish()
                         }
                     } else {
                         Log.e("payment", "Current payment intent : null")
@@ -126,7 +127,7 @@ class PaymentActivity : AppCompatActivity() {
             binding.payButton.visibility = View.VISIBLE
             binding.paymentmethod.visibility = View.VISIBLE
 
-            binding.greeting.text = "Hello ${it.displayName}"
+            binding.greeting.text = "Hello "
 
             setupPaymentSession()
         }?: run {

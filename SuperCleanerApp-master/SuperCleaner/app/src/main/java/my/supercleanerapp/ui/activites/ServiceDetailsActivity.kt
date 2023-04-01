@@ -22,6 +22,7 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
     private var mServiceId: String = ""
     private lateinit var binding: ActivityServiceDetailsBinding
     private lateinit var mServiceDetails: Service
+    private var mServiceOwnerId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +34,10 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
                 intent.getStringExtra(Constants.EXTRA_SERVICE_ID)!!
         }
 
-        var serviceOwnerId: String = ""
+//        var serviceOwnerId: String = ""
 
         if (intent.hasExtra(Constants.EXTRA_SERVICE_OWNER_ID)) {
-            serviceOwnerId =
+            mServiceOwnerId =
                 intent.getStringExtra(Constants.EXTRA_SERVICE_OWNER_ID)!!
         }
 
@@ -44,7 +45,7 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
         setupActionBar()
         //Now we have the service owner id so if the product which is added by owner himself should not see the button Add To Cart.
 
-        if (FirestoreClass().getCurrentUserID() == serviceOwnerId) {
+        if (FirestoreClass().getCurrentUserID() == mServiceOwnerId) {
             binding.btnAddToCart.visibility = View.GONE
             binding.btnGoToCart.visibility=View.GONE
         } else {
@@ -139,6 +140,7 @@ class ServiceDetailsActivity : BaseActivity(), View.OnClickListener {
 
         val addToCart = Cart(
             FirestoreClass().getCurrentUserID(),
+            mServiceOwnerId,
             mServiceId,
             mServiceDetails.title,
             mServiceDetails.price,

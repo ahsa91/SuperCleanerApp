@@ -858,9 +858,34 @@ class FirestoreClass {
      * @param activity Base class.
      * @param cartList List of cart items.
      */
-    fun updateAllDetails(activity: CheckoutActivity, cartList: ArrayList<Cart>) {
+    fun updateAllDetails(activity: CheckoutActivity, cartList: ArrayList<Cart>,reservation: Reservation) {
 
         val writeBatch = mFireStore.batch()
+        // Prepare the sold product details
+        for (cart in cartList) {
+
+            val reservedService = ReservedService(
+                // Here the user id will be of product owner.
+                cart.service_owner_id,
+                cart.title,
+                cart.price,
+                cart.cart_quantity,
+                cart.image,
+                reservation.title,
+                reservation.reservation_date,
+                reservation.reservation_time,
+                reservation.sub_total_amount,
+                reservation.address,
+                reservation.sub_total_amount
+
+            )
+
+
+            val documentReference = mFireStore.collection(Constants.RESERVED_SERVICES)
+                .document()
+            writeBatch.set(documentReference, reservedService)
+
+        }
 
         // Delete the list of cart items
         for (cart in cartList) {

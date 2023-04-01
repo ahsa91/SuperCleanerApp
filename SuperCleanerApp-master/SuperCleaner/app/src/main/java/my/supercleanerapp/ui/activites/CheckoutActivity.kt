@@ -41,6 +41,7 @@ class CheckoutActivity : BaseActivity() {
     private var mSubTotal: Double = 0.0
     private var mTotalAmount: Double = 0.0
     private var mPaymentMethod: String=""
+    private var mReservationDetails: Reservation = Reservation()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -262,7 +263,7 @@ class CheckoutActivity : BaseActivity() {
         val selectedTime = binding.tvSelectedDateTime.text.split(" ")[1]
 
 
-        val reservation = Reservation(
+        val mReservationDetails = Reservation(
             FirestoreClass().getCurrentUserID(),
             mCartItemsList,
             mAddressDetails!!,
@@ -276,7 +277,7 @@ class CheckoutActivity : BaseActivity() {
             reservation_paymentMethod = mPaymentMethod // Set the payment method value
         )
 
-        FirestoreClass().placeReservation(this@CheckoutActivity, reservation)
+        FirestoreClass().placeReservation(this@CheckoutActivity, mReservationDetails)
     }
 
 
@@ -287,7 +288,7 @@ class CheckoutActivity : BaseActivity() {
      */
     fun reservationPlacedSuccess() {
 
-        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList)
+        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList,mReservationDetails)
     }
 
     /**
