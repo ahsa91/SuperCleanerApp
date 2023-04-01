@@ -68,6 +68,13 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    // FirebaseUI for Authentication
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    // implementation 'com.google.firebase:firebase-functions:19.0.2'
+    implementation 'com.google.firebase:firebase-functions-ktx:20.2.2'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.5'
+    // Stripe Android SDK
+    implementation 'com.stripe:stripe-android:20.21.1'
 
 
 

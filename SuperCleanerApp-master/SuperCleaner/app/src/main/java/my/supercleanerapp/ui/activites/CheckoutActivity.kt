@@ -25,6 +25,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 //import my.supercleanerapp.models.PaymentMethod
 
 
@@ -300,11 +301,18 @@ class CheckoutActivity : BaseActivity() {
 
         Toast.makeText(this@CheckoutActivity, "Your reservation is placed successfully.", Toast.LENGTH_SHORT)
             .show()
+        if (mPaymentMethod == "Card") {
+            val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
+            intent.putExtra("Total Amount", mTotalAmount)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
 
-        val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
+
 
     }
 }
