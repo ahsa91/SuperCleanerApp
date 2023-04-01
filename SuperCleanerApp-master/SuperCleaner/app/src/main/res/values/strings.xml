@@ -143,5 +143,8 @@
     <string name="pick_date">Choose Date</string>
     <string name="pick_time">Choose Time</string>
     <string name="reservation_details_lbl_order_time">Reservation Time</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_reserved_services">Reserved Services</string>
+    <string name="no_services_reserved_yet">No services reserved yet</string>
 
 </resources>

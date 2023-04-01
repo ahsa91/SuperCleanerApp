@@ -62,29 +62,35 @@ class DashboardActivity : BaseActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
         val menu: Menu = navView.menu
         val navigationServicesItem: MenuItem = menu.findItem(R.id.navigation_services)
-
+        val navigationReservedServicesItem: MenuItem = menu.findItem(R.id.navigation_reserved_service)
         if (userAppAdmin) {
             navigationServicesItem.isVisible = true
+            navigationReservedServicesItem.isVisible = true
+
         } else {
             navigationServicesItem.isVisible = false
+            navigationReservedServicesItem.isVisible = false
         }
 
         // Update the bottom navigation view based on userAppAdmin value
         val navBottomView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
         val navBottomMenu: Menu = navBottomView.menu
         val navBottomServicesItem: MenuItem = navBottomMenu.findItem(R.id.navigation_services)
+        val navBottomReservedServicesItem: MenuItem = navBottomMenu.findItem(R.id.navigation_reserved_service)
 
         if (userAppAdmin) {
             navBottomServicesItem.isVisible = true
+            navBottomReservedServicesItem.isVisible = true
         } else {
             navBottomServicesItem.isVisible = false
+            navBottomReservedServicesItem.isVisible = false
         }
 
         val navController = findNavController(R.id.nav_host_fragment_content_dashboard)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_services, R.id.navigation_dashboard, R.id.navigation_reservations
+                R.id.navigation_services, R.id.navigation_dashboard, R.id.navigation_reservations,R.id.navigation_reserved_service
             ), drawerLayout
         )
 
@@ -99,6 +105,10 @@ class DashboardActivity : BaseActivity() {
                 }
                 R.id.navigation_dashboard -> {
                     navController.navigate(R.id.navigation_dashboard)
+                    true
+                }
+                R.id.navigation_reserved_service -> {
+                    navController.navigate(R.id.navigation_reserved_service)
                     true
                 }
                 R.id.navigation_reservations -> {

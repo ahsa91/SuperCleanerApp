@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_vector_orders"
             android:title="@string/title_reservations" />
         <item
+            android:id="@+id/navigation_reserved_service"
+            android:icon="@drawable/ic_vector_reserved_service"
+            android:title="@string/title_reserved_services" />
+        <item
             android:id="@+id/item_settings"
             android:icon="@drawable/ic_vector_settings"
             android:title="@string/title_settings"

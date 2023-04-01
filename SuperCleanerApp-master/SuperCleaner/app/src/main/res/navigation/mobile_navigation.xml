@@ -22,4 +22,9 @@
         android:name="my.supercleanerapp.ui.fragments.ReservationsFragment"
         android:label="@string/title_reservations"
         tools:layout="@layout/fragment_reservations" />
+    <fragment
+        android:id="@+id/navigation_reserved_service"
+        android:name="my.supercleanerapp.ui.fragments.ReservedServiceFragment"
+        android:label="@string/title_reserved_services"
+        tools:layout="@layout/fragment_reserved_service" />
 </navigation>
