@@ -41,7 +41,7 @@ class CheckoutActivity : BaseActivity() {
     private var mSubTotal: Double = 0.0
     private var mTotalAmount: Double = 0.0
     private var mPaymentMethod: String=""
-    private var mReservationDetails: Reservation = Reservation()
+    private lateinit var mReservationDetails: Reservation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

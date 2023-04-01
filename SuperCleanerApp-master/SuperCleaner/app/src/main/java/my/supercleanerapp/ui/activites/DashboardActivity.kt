@@ -63,9 +63,11 @@ class DashboardActivity : BaseActivity() {
         val menu: Menu = navView.menu
         val navigationServicesItem: MenuItem = menu.findItem(R.id.navigation_services)
         val navigationReservedServicesItem: MenuItem = menu.findItem(R.id.navigation_reserved_service)
+        val navigationReservationServiceItem: MenuItem = menu.findItem(R.id.navigation_reservations)
         if (userAppAdmin) {
             navigationServicesItem.isVisible = true
             navigationReservedServicesItem.isVisible = true
+            navigationReservationServiceItem.isVisible = false
 
         } else {
             navigationServicesItem.isVisible = false
@@ -77,10 +79,12 @@ class DashboardActivity : BaseActivity() {
         val navBottomMenu: Menu = navBottomView.menu
         val navBottomServicesItem: MenuItem = navBottomMenu.findItem(R.id.navigation_services)
         val navBottomReservedServicesItem: MenuItem = navBottomMenu.findItem(R.id.navigation_reserved_service)
-
+        val navBottomReservationServicesItem: MenuItem = navBottomMenu.findItem(R.id.navigation_reservations)
         if (userAppAdmin) {
             navBottomServicesItem.isVisible = true
             navBottomReservedServicesItem.isVisible = true
+            navBottomReservationServicesItem.isVisible = false
+
         } else {
             navBottomServicesItem.isVisible = false
             navBottomReservedServicesItem.isVisible = false

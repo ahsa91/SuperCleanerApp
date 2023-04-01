@@ -9,7 +9,7 @@
     tools:context=".ui.fragments.ReservedServiceFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_sold_product_items"
+        android:id="@+id/rv_reserved_service_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_no_sold_products_found"
+        android:id="@+id/tv_no_reserved_service_found"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_services_reserved_yet"

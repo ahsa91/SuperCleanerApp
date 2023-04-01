@@ -15,6 +15,7 @@ import my.supercleanerapp.models.*
 import my.supercleanerapp.ui.activites.*
 import my.supercleanerapp.ui.fragments.DashboardFragment
 import my.supercleanerapp.ui.fragments.ReservationsFragment
+import my.supercleanerapp.ui.fragments.ReservedServiceFragment
 import my.supercleanerapp.ui.fragments.ServicesFragment
 import my.supercleanerapp.utils.Constants
 
@@ -935,6 +936,48 @@ class FirestoreClass {
                 fragment.hideProgressDialog()
 
                 Log.e(fragment.javaClass.simpleName, "Error while getting the reservations list.", e)
+            }
+    }
+
+    /**
+     * A function to get the list of reserved services from the cloud firestore.
+     *
+     *  @param fragment Base class
+     */
+    fun getReservedServicesList(fragment: ReservedServiceFragment) {
+        // The collection name for reserved services
+        mFireStore.collection(Constants.RESERVED_SERVICES)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                // Here we get the list of reserved services in the form of documents.
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+
+                // Here we have created a new instance for reserved services ArrayList.
+                val list: ArrayList<ReservedService> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into reserved services ArrayList.
+                for (i in document.documents) {
+
+                    val reservedService = i.toObject(ReservedService::class.java)!!
+                    reservedService.id = i.id
+
+                    list.add(reservedService)
+                }
+
+
+                fragment.successReservedServicesList(list)
+
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error.
+                fragment.hideProgressDialog()
+
+                Log.e(
+                    fragment.javaClass.simpleName,
+                    "Error while getting the list of reserved services.",
+                    e
+                )
             }
     }
 
