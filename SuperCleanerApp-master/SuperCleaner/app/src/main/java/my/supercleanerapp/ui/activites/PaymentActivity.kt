@@ -21,6 +21,7 @@ import my.supercleanerapp.R
 import my.supercleanerapp.firestore.FirebaseEphemeralKeyProvider
 import my.supercleanerapp.databinding.ActivityPaymentBinding
 import my.supercleanerapp.ui.fragments.DashboardFragment
+import my.supercleanerapp.ui.fragments.ReservationsFragment
 
 @Suppress("DEPRECATION")
 class PaymentActivity : AppCompatActivity() {
@@ -41,7 +42,7 @@ class PaymentActivity : AppCompatActivity() {
         // Initialize PaymentConfiguration
         PaymentConfiguration.init(applicationContext, "pk_test_51L8PnGAbMWXxjwlWmnXIS3B0ZF8tAVFh0NEBF8HBT3JiqL7AKFFSdJzuWRvMMrv7Uq9ZF9E4d9OuNMROlaY4Wmnf00duWPWcQH")
 
-            binding.loginButton.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             // login to firebase
             val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build())
@@ -64,10 +65,11 @@ class PaymentActivity : AppCompatActivity() {
             paymentSession.presentPaymentMethodSelection()
         }
         mTotalAmount = intent.getDoubleExtra("TOTAL_AMOUNT", 50.0)
-
+        Log.d("PaymentActivity", "Total_Amount: $mTotalAmount") // Added log statement
 
         showUI()
     }
+
 
 
     private fun confirmPayment(paymentMethodId: String) {
@@ -102,9 +104,10 @@ class PaymentActivity : AppCompatActivity() {
 
                             binding.checkoutSummary.text = "Thank you for your payment"
                             Toast.makeText(applicationContext, "Payment Done!!", Toast.LENGTH_LONG).show()
-//                            val intent = Intent(this@PaymentActivity, DashboardFragment::class.java)
-//                            startActivity(intent)
                             finish()
+                            finish()
+//                            val intent = Intent(this@PaymentActivity, ReservationsFragment::class.java)
+//                            startActivity(intent)
                         }
                     } else {
                         Log.e("payment", "Current payment intent : null")

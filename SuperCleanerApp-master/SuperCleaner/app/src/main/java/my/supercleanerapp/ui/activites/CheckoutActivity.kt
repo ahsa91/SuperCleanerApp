@@ -41,7 +41,7 @@ class CheckoutActivity : BaseActivity() {
     private var mSubTotal: Double = 0.0
     private var mTotalAmount: Double = 0.0
     private var mPaymentMethod: String=""
-    private lateinit var mReservationDetails: Reservation
+    private var mReservationDetails: Reservation = Reservation()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -303,9 +303,7 @@ class CheckoutActivity : BaseActivity() {
         Toast.makeText(this@CheckoutActivity, "Your reservation is placed successfully.", Toast.LENGTH_SHORT)
             .show()
         if (mPaymentMethod == "Card") {
-            val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
-            intent.putExtra("Total Amount", mTotalAmount)
-            startActivity(intent)
+            sendTotalAmountToPaymentActivity()
         }else{
             val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -313,7 +311,13 @@ class CheckoutActivity : BaseActivity() {
             finish()
         }
 
+    }
 
+    private fun sendTotalAmountToPaymentActivity() {
+        Log.d("CheckoutActivity", "mTotalAmount: $mTotalAmount")
 
+        val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
+        intent.putExtra("TOTAL_AMOUNT", mTotalAmount)
+        startActivity(intent)
     }
 }
