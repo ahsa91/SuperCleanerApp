@@ -263,7 +263,7 @@ class CheckoutActivity : BaseActivity() {
         val selectedTime = binding.tvSelectedDateTime.text.split(" ")[1]
 
 
-        val mReservationDetails = Reservation(
+           mReservationDetails = Reservation(
             FirestoreClass().getCurrentUserID(),
             mCartItemsList,
             mAddressDetails!!,

@@ -866,7 +866,7 @@ class FirestoreClass {
         for (cart in cartList) {
 
             val reservedService = ReservedService(
-                // Here the user id will be of product owner.
+                // Here the user id will be of service owner.
                 cart.service_owner_id,
                 cart.title,
                 cart.price,
@@ -877,7 +877,8 @@ class FirestoreClass {
                 reservation.reservation_time,
                 reservation.sub_total_amount,
                 reservation.address,
-                reservation.sub_total_amount
+                reservation.sub_total_amount,
+                reservation.id
 
             )
 
