@@ -22,4 +22,5 @@ data class ReservedService (
     val address: Address = Address(),
     val total_amount: String = "",
     var id: String = "",
+    val reserved_service_status: Boolean = false,
 ) : Parcelable

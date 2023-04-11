@@ -135,6 +135,29 @@
                         tools:text="20 Oct 2020" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <my.supercleanerapp.utils.SCATextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/reservation_details_lbl_order_status"
+                        android:textColor="@color/colorDarkGrey"
+                        android:textSize="@dimen/my_order_details_label_value_textSize" />
+
+                    <ToggleButton
+                        android:id="@+id/tv_reservation_status_toggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/toggle_selector"
+                        android:textOn="Complete"
+                        android:textOff="Incomplete"
+                        android:textColor="@color/colorSecondaryText" />
+
+                </LinearLayout>
 
 
             </LinearLayout>
