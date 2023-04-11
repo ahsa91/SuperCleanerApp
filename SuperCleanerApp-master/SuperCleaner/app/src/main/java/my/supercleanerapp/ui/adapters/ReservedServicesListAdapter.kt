@@ -1,6 +1,7 @@
 package my.supercleanerapp.ui.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,10 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.recyclerview.widget.RecyclerView
 import my.supercleanerapp.R
 import my.supercleanerapp.models.ReservedService
+import my.supercleanerapp.ui.activites.ReservedServicesDetailsActivity
+import my.supercleanerapp.ui.activites.ServiceDetailsActivity
 import my.supercleanerapp.ui.fragments.ReservedServiceFragment
+import my.supercleanerapp.utils.Constants
 import my.supercleanerapp.utils.GlideLoader
 
 open class ReservedServicesListAdapter(
@@ -40,7 +44,13 @@ open class ReservedServicesListAdapter(
             )
 
             holder.itemView.findViewById<TextView>(R.id.tv_item_name).text = model.title
-            holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "$${model.price}"
+            holder.itemView.findViewById<TextView>(R.id.tv_item_price).text = "€${model.total_amount}"
+            holder.itemView.setOnClickListener {
+                // Launch reserved service details screen.
+                val intent = Intent(context, ReservedServicesDetailsActivity::class.java)
+                intent.putExtra(Constants.EXTRA_RESERVED_SERVICE_DETAILS, model)
+                context.startActivity(intent)
+            }
 
         }
     }

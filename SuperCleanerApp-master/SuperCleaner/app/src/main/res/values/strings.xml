@@ -102,7 +102,7 @@
     <string name="no">No</string>
     <string name="title_service_details">SERVICE DETAILS</string>
     <string name="lbl_service_description">Service Description</string>
-    <string name="success_message_item_added_to_cart">item added to cart succesfully</string>
+    <string name="success_message_item_added_to_cart">item added to cart successfully</string>
     <string name="btn_lbl_go_to_cart">go to cart</string>
     <string name="title_my_cart">MY CART</string>
     <string name="no_cart_item_found">No item found in cart!</string>
@@ -146,5 +146,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_reserved_services">Reserved Services</string>
     <string name="no_services_reserved_yet">No services reserved yet</string>
+    <string name="title_reserved_service_details">Reserved Service Details</string>
+    <string name="service_details_lbl">Service Details</string>
+    <string name="service_details_lbl_service_id">Service ID</string>
+    <string name="service_details_lbl_service_date">Reserved Date</string>
+    <string name="service_details_lbl_address">Address</string>
+    <string name="service_details_lbl_service_time">Reserved time</string>
 
 </resources>

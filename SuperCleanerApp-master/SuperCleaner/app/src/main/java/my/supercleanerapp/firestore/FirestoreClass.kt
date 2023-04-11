@@ -877,7 +877,7 @@ class FirestoreClass {
                 reservation.reservation_time,
                 reservation.sub_total_amount,
                 reservation.address,
-                reservation.sub_total_amount,
+                reservation.total_amount,
                 reservation.id
 
             )
@@ -981,6 +981,8 @@ class FirestoreClass {
                 )
             }
     }
+
+
 
 
 
